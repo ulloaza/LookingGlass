@@ -1,4 +1,4 @@
-package schedulingApp;
+package sample;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -92,5 +92,16 @@ public class Day implements java.io.Serializable{
 	 */
 	public int getYear() {
 		return year;
+	}
+	public String dateToString() {
+		return month + "/" + day + "/" + year;
+	}
+	public boolean equals(Day day) {
+		if (this.day == day.getDay() && this.month == day.getMonth() && this.year == day.getYear()) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 }

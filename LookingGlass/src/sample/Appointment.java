@@ -1,4 +1,4 @@
-package schedulingApp;
+package sample;
 
 public class Appointment implements java.io.Serializable{
 	
