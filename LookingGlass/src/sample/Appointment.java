@@ -4,8 +4,6 @@ public class Appointment implements java.io.Serializable{
 	
 	/*appointment content*/
 	private String task;
-	/*note content/ also temporary, I want to see if a simple arraylist of String of notes will work in Day Class*/
-	private String note;
 	/*time content*/
 	private String time;
 
@@ -36,13 +34,6 @@ public class Appointment implements java.io.Serializable{
 	 */
 	public String getTask() {
 		return task;
-	}
-	/*
-	 * @purpose get note information
-	 * @returns - note
-	 */
-	public String getNote() {
-		return note;
 	}
 	/*
 	 * @purpose get time info
@@ -79,12 +70,6 @@ public class Appointment implements java.io.Serializable{
 		this.task = task;
 	}
 	/*
-	 * @purpose - set Note info 
-	 */
-	public void setNote(String note) {
-		this.note = note;
-	}
-	/*
 	 * @purpose - set time info 
 	 */
 	public void setTime(String time) { 
@@ -95,6 +80,14 @@ public class Appointment implements java.io.Serializable{
 	 */
 	public String toString() {
 		return time + ": " + task;
+	}
+	public boolean equals(Appointment appt) {
+		if(this.task.equals(appt.getTask())) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 }

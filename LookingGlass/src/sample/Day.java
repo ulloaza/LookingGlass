@@ -36,6 +36,31 @@ public class Day implements java.io.Serializable{
 		appointments.add(appt);
 		numOfAppointments += 1;
 	}
+	public void removeAppointment(String task) {
+		for(int i = 0;i<appointments.size();i++) {
+			Appointment appt = appointments.get(i);
+			if(task.equals(appt.getTask())) {
+				appointments.remove(i);
+			}
+		}
+	}
+	public void editAppointmentTask(String task, String newTask) {
+		for(int i = 0;i<appointments.size();i++) {
+			Appointment appt = appointments.get(i);
+			if(task.equals(appt.getTask())) {
+				appt.setTask(newTask);
+			}
+		}
+		
+	}
+	public void removeNote(String note) {
+		if(notes.contains(note)) {
+			notes.remove(note);
+		}
+		else {
+			return;
+		}
+	}
 	/*
 	 * @purpose get appointments list
 	 * @returns ArrayList appointments
@@ -92,6 +117,22 @@ public class Day implements java.io.Serializable{
 	 */
 	public int getYear() {
 		return year;
+	}
+	public boolean hasNotes() {
+		if (notes.isEmpty()) {
+			return false;
+		}
+		else {
+			return true;
+		}
+	}
+	public boolean hasAppointments() {
+		if(appointments.isEmpty()) {
+			return false;
+		}
+		else {
+			return true;
+		}
 	}
 	public String dateToString() {
 		return month + "/" + day + "/" + year;
