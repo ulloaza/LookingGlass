@@ -1,22 +1,24 @@
 package sample;
 
-import java.io.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Day implements java.io.Serializable{
+/*
+ * "Looking Glass" - Class Day
+ * @purpose Models an a day for a user calendar
+ * @class CS3443.003
+ * @author Gilberto Ramirez vwz745
+ */
+
+public class Day implements Serializable {
 	
-	private int day;
-	private int month;
-	private int year;
-	
-	/*keep count of notes/appts*/
-	private int numOfAppointments = 0;
-	private int numOfNotes = 0;
+	/*date information*/
+	private int day, month, year;
 	
 	/*store objects in dynamic array list for easy add/del*/
-	private ArrayList<Appointment> appointments = new ArrayList<Appointment>();	
+	private ArrayList<Appointment> appointmentList = new ArrayList<Appointment>();	
 	/*creates array list of notes for caldender day*/
-	private ArrayList<String> notes = new ArrayList<String>();
+	private ArrayList<String> noteList = new ArrayList<String>();
 	
 	/*
 	 * Constructor for Day Class
@@ -26,39 +28,63 @@ public class Day implements java.io.Serializable{
 		this.day = day;
 		this.month = month;
 		this.year = year;
-		
 	}
 	/*
 	 * @purpose - add an appointment to the array list
 	 * @param - Appointment appt
 	 */
 	public void addAppointment(Appointment appt) {
-		appointments.add(appt);
-		numOfAppointments += 1;
+		appointmentList.add(appt);
 	}
-	public void removeAppointment(String task) {
-		for(int i = 0;i<appointments.size();i++) {
-			Appointment appt = appointments.get(i);
-			if(task.equals(appt.getTask())) {
-				appointments.remove(i);
+	/*
+	 * @purpose - remove an appt from the arraylist
+	 * @param - String task
+	 */
+	public void removeAppointment(Appointment appt) {
+		for(int i = 0;i<appointmentList.size();i++) {
+			/*create temp appointment obj*/
+			Appointment temp = appointmentList.get(i);
+			/*checking to see if tasks are the same*/
+			if(appt.equals(temp)) {
+				appointmentList.remove(i);
+				return;
+			}
+		}
+	} 
+	/*
+	 * @purpose - edit an appt from the arraylist
+	 * @param - String task, String newTask
+	 */
+	public void editAppointmentTask(Appointment appt, String newTask, String newStartTime, String newEndTime) {
+		for(int i = 0;i<appointmentList.size();i++) {
+			Appointment temp = appointmentList.get(i);
+			if(appt.equals(temp)) {
+				temp.setTask(newTask);
+				temp.setstartTime(newStartTime);
+				temp.setEndTime(newEndTime);
+				return;
 			}
 		}
 	}
-	public void editAppointmentTask(String task, String newTask) {
-		for(int i = 0;i<appointments.size();i++) {
-			Appointment appt = appointments.get(i);
-			if(task.equals(appt.getTask())) {
-				appt.setTask(newTask);
+	/*
+	 * @purpose - edit an note from the arraylist
+	 * @param - String note, String newNote
+	 */
+	public void editNote(String note, String newNote) {
+		for(int i = 0;i<noteList.size();i++) {
+			if(note.equals(noteList.get(i))) {
+				noteList.set(i, newNote);
+				return;
 			}
 		}
-		
 	}
+	/*
+	 * @purpose - remove an note from the arraylist
+	 * @param - String note
+	 */
 	public void removeNote(String note) {
-		if(notes.contains(note)) {
-			notes.remove(note);
-		}
-		else {
-			return;
+		if(noteList.contains(note)) {
+			noteList.remove(note);
 		}
 	}
 	/*
@@ -66,36 +92,35 @@ public class Day implements java.io.Serializable{
 	 * @returns ArrayList appointments
 	 */
 	public ArrayList<Appointment> getAppointments() {
-		return appointments;
+		return appointmentList;
 	}
 	/*
 	 * @purpose get notes
 	 * @returns - ArrayList notes
 	 */
 	public ArrayList<String> getNotes() {
-		return notes;
+		return noteList;
 	}
 	/*
 	 * @purpose - adds a String note to the note arraylist
 	 * @param - notes
 	 */
 	public void addNote(String note) {
-		notes.add(note);
-		numOfNotes += 1;
+		noteList.add(note);
 	}
 	/*
 	 * @purpose - get the number of appts
-	 * @returns - numOfAppointments
+	 * @returns - size of appt list
 	 */
 	public int getNumOfAppointments() {
-		return numOfAppointments;
+		return appointmentList.size();
 	}
 	/*
 	 * @purpose - get the number of notes
-	 * @returns - numOfNotes
+	 * @returns - size of note list
 	 */
 	public int getNumOfNotes() {
-		return numOfNotes;
+		return noteList.size();
 	}
 	/*
 	 * @purpose - get day 
@@ -118,25 +143,41 @@ public class Day implements java.io.Serializable{
 	public int getYear() {
 		return year;
 	}
+	/*
+	 * @purpose check to see if notes are present
+	 * @returns - true if there are, if none then return false
+	 */
 	public boolean hasNotes() {
-		if (notes.isEmpty()) {
+		if (noteList.isEmpty()) {
 			return false;
 		}
 		else {
 			return true;
 		}
 	}
+	/*
+	 * @purpose check to see if appts are present
+	 * @returns - true if there are, if none then return false
+	 */
 	public boolean hasAppointments() {
-		if(appointments.isEmpty()) {
+		if(appointmentList.isEmpty()) {
 			return false;
 		}
 		else {
 			return true;
 		}
 	}
+	/*
+	 * @purpose toString method for day class format: 03/16/20
+	 * @returns String representation
+	 */
 	public String dateToString() {
 		return month + "/" + day + "/" + year;
 	}
+	/*
+	 * @purpose equals method comparing Day Classes
+	 * @returns boolean
+	 */
 	public boolean equals(Day day) {
 		if (this.day == day.getDay() && this.month == day.getMonth() && this.year == day.getYear()) {
 			return true;
