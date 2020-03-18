@@ -13,13 +13,22 @@ public class MyCalendar implements Serializable {
 	
 	/*stores username/password*/
 	private String user, password;
+	/*stores list of all available users*/
+	private static ArrayList<String> userList = new ArrayList<String>();
+	
+	
 	
 	private static String months[] = {"", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
 	private static int daysInMonth[] = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 	
 	/*A dynamic array of all the days holing appointment/note information*/
 	private ArrayList<Day> dayList = new ArrayList<Day>();
-	
+	/*
+	 * Invalid constructor for MyCalendar
+	 */
+	public MyCalendar() {
+		
+	}
 	/* 
 	 * Constructor for MyCalender Class
 	 * @param String user, String password
@@ -27,6 +36,21 @@ public class MyCalendar implements Serializable {
 	public MyCalendar(String user, String password) {
 		this.user = user;
 		this.password = password;
+		addUser(user);
+	}
+	/*
+	 * @purpose - adds user to the userlist so we know how many/what users are available
+	 * @param = the user name
+	 */
+	public static void addUser(String user) {
+		userList.add(user);
+	}
+	/*
+	 * @purpose - get the name of all users
+	 * @returns - the user list
+	 */
+	public static ArrayList<String> getUserList() {
+		return userList;
 	}
 	/*
 	 * @purpose returns the numbers of days withing a given month
