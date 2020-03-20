@@ -30,11 +30,22 @@ public class Day implements Serializable {
 		this.year = year;
 	}
 	/*
-	 * @purpose - add an appointment to the array list
+	 * @purpose - adds appt to list in order from earliest to latest
 	 * @param - Appointment appt
 	 */
 	public void addAppointment(Appointment appt) {
+		for(int i = 0;i<appointmentList.size();i++) {
+			if(appointmentList.get(i).getStartHour() > appt.getStartHour()) {
+				appointmentList.add(i, appt);
+				return;
+			}
+			else if(appointmentList.get(i).getStartHour() == appt.getStartHour() && appointmentList.get(i).getStartMinute() > appt.getStartMinute()) {
+				appointmentList.add(i, appt);
+				return;
+			}
+		}
 		appointmentList.add(appt);
+		
 	}
 	/*
 	 * @purpose - remove an appt from the arraylist
@@ -55,13 +66,15 @@ public class Day implements Serializable {
 	 * @purpose - edit an appt from the arraylist
 	 * @param - String task, String newTask
 	 */
-	public void editAppointmentTask(Appointment appt, String newTask, String newStartTime, String newEndTime) {
+	public void editAppointment(Appointment appt, String newTask, int newStartHour, int newStartMinute, int newEndHour, int newEndMinute) {
 		for(int i = 0;i<appointmentList.size();i++) {
 			Appointment temp = appointmentList.get(i);
 			if(appt.equals(temp)) {
 				temp.setTask(newTask);
-				temp.setstartTime(newStartTime);
-				temp.setEndTime(newEndTime);
+				temp.setStartHour(newStartHour);
+				temp.setStartMinute(newStartMinute);
+				temp.setEndHour(newEndHour);
+				temp.setEndMinute(newEndMinute);
 				return;
 			}
 		}

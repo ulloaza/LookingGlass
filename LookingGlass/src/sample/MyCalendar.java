@@ -2,6 +2,8 @@ package sample;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 /*
  * "Looking Glass" - Class MyCalendar
@@ -107,8 +109,8 @@ public class MyCalendar implements Serializable {
 	 * @purpose creates new appointment 
 	 * @param String task, String startTime, String endTime, int day, int month, int year
 	 */
-	public void createAppointment(String task, String startTime, String endTime, int day, int month, int year) {
-		Appointment appt = new Appointment(task, startTime, endTime, day, month, year);
+	public void createAppointment(String task, int startHour, int startMinute, int endHour, int endMinute, int day, int month, int year) {
+		Appointment appt = new Appointment(task, startHour, startMinute, endHour, endMinute, day, month, year);
 		Day calDay = new Day(day, month, year);
 		int index = findDay(calDay);
 		/*if day does not exists yet, then create new day obj*/
@@ -126,7 +128,7 @@ public class MyCalendar implements Serializable {
 	 * @purpose deletes  appointment 
 	 * @param String task, String startTime, String endTime, int day, int month, int year
 	 */
-	public void deleteAppointment(String task, String startTime, String endTime, int day, int month, int year) {
+	public void deleteAppointment(int startHour, int startMinute, int endHour, int endMinute, int day, int month, int year) {
 		Day calDay = new Day(day, month, year);
 		int index = findDay(calDay);
 		if(index == -1) {
@@ -134,7 +136,7 @@ public class MyCalendar implements Serializable {
 		}
 		else {
 			calDay = dayList.get(index);
-			Appointment tempAppt = new Appointment(task, startTime, endTime, day, month, year);
+			Appointment tempAppt = new Appointment(startHour, startMinute, endHour, endMinute, day, month, year);
 			calDay.removeAppointment(tempAppt);
 		}
 	}
@@ -142,7 +144,7 @@ public class MyCalendar implements Serializable {
 	 * @purpose edits  appointment 
 	 * @param String task, String startTime, String endTime, int day, int month, int year, String newTask
 	 */
-	public void editAppointment(String task, String startTime, String endTime, int day, int month, int year, String newTask, String newStartTime, String newEndTime) {
+	public void editAppointment(int startHour, int startMinute, int endHour, int endMinute, int newStartHour, int newStartMinute, int newEndHour, int newEndMinute, String newTask, int day, int month, int year) {
 		Day calDay = new Day(day, month, year);
 		int index = findDay(calDay);
 		if(index == -1) {
@@ -150,8 +152,10 @@ public class MyCalendar implements Serializable {
 		}
 		else {
 			calDay = dayList.get(index);
-			Appointment tempAppt = new Appointment(task, startTime, endTime, day, month, year);
-			calDay.editAppointmentTask(tempAppt, newTask, newStartTime, newEndTime);
+			Appointment tempAppt = new Appointment(startHour, startMinute, endHour, endMinute, day, month, year);
+			calDay.removeAppointment(tempAppt);
+			tempAppt = new Appointment(newTask, newStartHour, newStartMinute, newEndHour, newEndMinute, day, month, year);
+			calDay.addAppointment(tempAppt);
 		}
 	}
 	/*
@@ -239,6 +243,25 @@ public class MyCalendar implements Serializable {
 	 */
 	public Day getDayObject(int index) {
 		return dayList.get(index);
+	}
+	/*
+	 * @purpose checks  to see if time slot is taken already
+	 * @param appt object
+	 * @return true if it is take, false otherwise
+	 */
+	public boolean isTimeTaken(Appointment appt) {
+		Calendar start1 = new GregorianCalendar(appt.getYear(), appt.getMonth(), appt.getDay(), appt.getStartHour(), appt.getStartMinute());
+		Calendar end1 = new GregorianCalendar(appt.getYear(), appt.getMonth(), appt.getDay(), appt.getEndHour(), appt.getEndMinute());
+		
+		ArrayList<Appointment> apptList = getAppointmentsSpecifiedDate(appt.getDay(), appt.getMonth(), appt.getYear());
+		for(Appointment a : apptList) {
+			Calendar start2 = new GregorianCalendar(a.getYear(), a.getMonth(), a.getDay(), a.getStartHour(), a.getStartMinute());
+			Calendar end2 = new GregorianCalendar(a.getYear(), a.getMonth(), a.getDay(), a.getEndHour(), a.getEndMinute());
+			if(start1.before(end2) && start2.before(end1)) {
+				return true;
+			}
+		}
+		return false;
 	}
 }
 

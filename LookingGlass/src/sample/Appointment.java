@@ -14,7 +14,7 @@ public class Appointment implements Serializable {
 	/*appointment content*/
 	private String task;
 	/*time content*/
-	private String startTime, endTime;
+	private int startHour, startMinute, endHour, endMinute;
 	/*privacty setting*/
 	private boolean privacy;	
 	/*appt date*/
@@ -25,10 +25,21 @@ public class Appointment implements Serializable {
 	 * @param - String task, String time, int day, int month, int year
 	 * 
 	 */
-	public Appointment(String task, String startTime, String endTime, int day, int month, int year) {
+	public Appointment(String task, int startHour, int startMinute, int endHour, int endMinute, int day, int month, int year) {
 		this.task = task;
-		this.startTime = startTime;
-		this.endTime = endTime;
+		this.startHour = startHour;
+		this.startMinute = startMinute;
+		this.endHour = endHour;
+		this.endMinute = endMinute;
+		this.day = day;
+		this.month = month;
+		this.year = year;
+	}
+	public Appointment(int startHour, int startMinute, int endHour, int endMinute, int day, int month, int year) {
+		this.startHour = startHour;
+		this.startMinute = startMinute;
+		this.endHour = endHour;
+		this.endMinute = endMinute;
 		this.day = day;
 		this.month = month;
 		this.year = year;
@@ -42,17 +53,31 @@ public class Appointment implements Serializable {
 	}
 	/*
 	 * @purpose get time info
-	 * @returns starttime
+	 * @returns starthour
 	 */
-	public String getstartTime() {
-		return startTime;
+	public int getStartHour() {
+		return startHour;
 	}
 	/*
 	 * @purpose get time info
-	 * @returns endtime
+	 * @returns startminute
 	 */
-	public String getEndTime() {
-		return endTime;
+	public int getStartMinute() {
+		return startMinute;
+	}
+	/*
+	 * @purpose get time info
+	 * @returns endhour
+	 */
+	public int getEndHour() {
+		return endHour;
+	}
+	/*
+	 * @purpose get time info
+	 * @returns endminute
+	 */
+	public int getEndMinute() {
+		return endMinute;
 	}
 	/*
 	 * @purpose - get day 
@@ -97,20 +122,26 @@ public class Appointment implements Serializable {
 	/*
 	 * @purpose - set time info 
 	 */
-	public void setstartTime(String startTime) { 
-		this.startTime = startTime;
+	public void setStartHour(int startHour) { 
+		this.startHour = startHour;
+	}
+	public void setStartMinute(int startMinute) {
+		this.startMinute = startMinute;
 	}
 	/*
 	 * @purpose - set time info 
 	 */
-	public void setEndTime(String endTime) { 
-		this.endTime = endTime;
+	public void setEndHour(int endHour) { 
+		this.endHour = endHour;
+	}
+	public void setEndMinute(int endMinute) {
+		this.endMinute = endMinute;
 	}
 	/*
 	 * @purpose - toString method format: 9:00: Task info
 	 */
 	public String toString() {
-		return task + " " + startTime;
+		return startHour + ":" + startMinute + "-"  + task;
 	}
 	/*
 	 * @purpose - Compares appointment classes to check if the task is the same
@@ -118,7 +149,7 @@ public class Appointment implements Serializable {
 	 * @returns boolean
 	 */
 	public boolean equals(Appointment appt) {
-		if(this.task.equals(appt.getTask()) && this.startTime == appt.getstartTime() && this.endTime == appt.getEndTime()) {
+		if(this.startHour == appt.getStartHour() && this.startMinute == appt.getEndMinute()) {
 			return true;
 		}
 		else {
