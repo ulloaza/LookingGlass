@@ -116,7 +116,7 @@ public class MyCalendar implements Serializable {
 		/*if day does not exists yet, then create new day obj*/
 		if(index == -1) {
 			calDay.addAppointment(appt);
-			dayList.add(calDay);
+			addDay(calDay);
 		}
 		/*else add to existing day object*/
 		else {
@@ -197,7 +197,7 @@ public class MyCalendar implements Serializable {
 		int index = findDay(calDay);
 		if(index == -1) {
 			calDay.addNote(note);
-			dayList.add(calDay);
+			addDay(calDay);
 		}
 		else {
 			calDay = dayList.get(index);
