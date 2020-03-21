@@ -237,6 +237,23 @@ public class MyCalendar implements Serializable {
 		return calDay.getNotes();
 	}
 	/*
+	 * @purpose adds a calday object to the list in order
+	 * @param Calday Object
+	 */
+	public void addDay(Day calDay) {
+		Calendar newDay = new GregorianCalendar(calDay.getYear(), calDay.getMonth(), calDay.getDay(), 0, 0);
+		
+		for(int i = 0;i < dayList.size();i++) {
+			Day temp = dayList.get(i);
+			Calendar oldDay = new GregorianCalendar(temp.getYear(), temp.getMonth(), temp.getDay(), 0, 0);
+			if(oldDay.after(newDay)) {
+				dayList.add(i, calDay);
+				return;
+			}
+		}
+		dayList.add(calDay);
+	}
+	/*
 	 * @purpose get spec day object
 	 * @param int INDEX
 	 * @returns day object
@@ -262,6 +279,25 @@ public class MyCalendar implements Serializable {
 			}
 		}
 		return false;
+	}
+	/*
+	 * @purpose removes days 2 weeks out
+	 * 
+	 */
+	public void cleanCalendar() {
+		Calendar limit = new GregorianCalendar();
+		limit.add(Calendar.DATE, -14);
+		for(int i = 0;i < dayList.size();i++) {
+			Day d = dayList.get(i);
+			Calendar day = new GregorianCalendar(d.getYear(), d.getMonth(), d.getDay(), 0, 0);
+			
+			if(day.before(limit)) {
+				dayList.remove(i);
+			}
+			else {
+				return;
+			}	
+		}
 	}
 }
 
