@@ -1,4 +1,3 @@
-package sample;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -27,6 +26,7 @@ public class Main extends Application {
         stackPane.getChildren().add(maskPane);
         Scene mainScene = new Scene(stackPane, 1250, 750);
         mainScene.setFill(Color.TRANSPARENT);
+        maskPane.getStylesheets().add("AppStyle.css");
         maskPane.setLayoutX(200);
         maskPane.setLayoutY(300);
         primaryStage.setScene(mainScene);

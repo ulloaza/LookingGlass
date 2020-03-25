@@ -1,0 +1,13 @@
+#closeButton.button {
+    opacity: 0.6;
+    -fx-background-color: TRANSPARENT;
+    -fx-background-image: url("Images/close.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: 32px 32px;
+    -fx-background-position: center;
+    -fx-background-radius: 5;
+}
+
+#closeButton.button:hover {
+    -fx-effect: dropshadow(three-pass-box, darkred, 10, 0, 0, 0);
+}
