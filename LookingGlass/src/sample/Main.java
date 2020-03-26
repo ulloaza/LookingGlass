@@ -4,6 +4,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.event.EventHandler;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
@@ -11,6 +13,8 @@ import javafx.stage.StageStyle;
 
 public class Main extends Application {
     private static final int shadowSize = 50;
+    private double xOffset = 0;
+    private double yOffset = 0;
 
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -24,6 +28,22 @@ public class Main extends Application {
         primaryStage.setTitle("Looking Glass v 1.0");
         Pane maskPane =  FXMLLoader.load(getClass().getResource("sample.fxml"));
         stackPane.getChildren().add(maskPane);
+
+        stackPane.setOnMousePressed(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                xOffset = event.getSceneX();
+                yOffset = event.getSceneY();
+            }
+        });
+        stackPane.setOnMouseDragged(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                primaryStage.setX(event.getScreenX() - xOffset);
+                primaryStage.setY(event.getScreenY() - yOffset);
+            }
+        });
+
         Scene mainScene = new Scene(stackPane, 1250, 750);
         mainScene.setFill(Color.TRANSPARENT);
         maskPane.getStylesheets().add("AppStyle.css");

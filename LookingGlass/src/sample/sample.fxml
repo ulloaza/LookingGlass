@@ -32,6 +32,31 @@
       </items>
     </SplitPane>
     <Button fx:id="closeButton" cancelButton="false" contentDisplay="CENTER" defaultButton="false" layoutX="1165.0" layoutY="55.0" mnemonicParsing="false" onAction="#handleCloseButtonAction" prefHeight="29.0" prefWidth="32.0" />
+    <MenuBar layoutX="51.0" layoutY="50.0">
+      <menus>
+        <Menu mnemonicParsing="false" text="User">
+          <items>
+            <MenuItem mnemonicParsing="false" text="New User" />
+            <MenuItem mnemonicParsing="false" text="Load..." />
+          </items>
+        </Menu>
+        <Menu mnemonicParsing="false" text="Tasks">
+          <items>
+            <MenuItem mnemonicParsing="false" text="Add Appointment" />
+            <MenuItem mnemonicParsing="false" text="Delete Appointment" />
+            <MenuItem mnemonicParsing="false" text="Add Day Task" />
+            <MenuItem mnemonicParsing="false" text="Delete Day Task" />
+            <MenuItem mnemonicParsing="false" text="Find Free Time" />
+            <MenuItem mnemonicParsing="false" text="Find Multi-User Meet Time" />
+          </items>
+        </Menu>
+        <Menu mnemonicParsing="false" text="Help">
+          <items>
+            <MenuItem mnemonicParsing="false" text="About Looking Glass" />
+          </items>
+        </Menu>
+      </menus>
+    </MenuBar>
   </children>
   <stylesheets>
     <URL value="@AppStyle.css" />
