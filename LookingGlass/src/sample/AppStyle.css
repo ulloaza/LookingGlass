@@ -8,7 +8,25 @@
     -fx-background-radius: 5;
 }
 
-#closeButton.button:hover {
+#addTaskBtn.button {
+    -fx-background-color: TRANSPARENT;
+    -fx-background-image: url("Images/menu.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: 60px 45px;
+    -fx-background-position: center;
+    -fx-background-radius: 5;
+}
+
+#monthViewBtn.button {
+    -fx-background-color: TRANSPARENT;
+    -fx-background-image: url("Images/calendar.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: 60px 45px;
+    -fx-background-position: center;
+    -fx-background-radius: 5;
+}
+
+.button:hover {
     -fx-effect: dropshadow(three-pass-box, darkred, 10, 0, 0, 0);
 }
 

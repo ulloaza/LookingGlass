@@ -26,7 +26,7 @@ public class Main extends Application {
         );
         //Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
         primaryStage.setTitle("Looking Glass v 1.0");
-        Pane maskPane =  FXMLLoader.load(getClass().getResource("sample.fxml"));
+        Pane maskPane =  FXMLLoader.load(getClass().getResource("main.fxml"));
         stackPane.getChildren().add(maskPane);
 
         stackPane.setOnMousePressed(new EventHandler<MouseEvent>() {

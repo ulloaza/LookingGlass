@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
 <?import java.net.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
 <AnchorPane opacity="1.0" prefHeight="800.0" prefWidth="1300.0" visible="true" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="Controller">
   <children>
@@ -16,9 +13,7 @@
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" />
       </items>
     </SplitPane>
-    <Button layoutX="116.0" layoutY="318.0" minWidth="32.0" mnemonicParsing="false" prefHeight="105.0" prefWidth="32.0" text="Button" />
-    <Button layoutX="1098.0" layoutY="318.0" minWidth="32.0" mnemonicParsing="false" prefHeight="105.0" prefWidth="32.0" text="Button" />
-    <Button layoutX="567.0" layoutY="646.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="138.0" text="Button" />
+    <Button fx:id="monthViewBtn" layoutX="736.0" layoutY="614.0" mnemonicParsing="false" prefHeight="56.0" prefWidth="84.0" text="" />
     <SplitPane dividerPositions="0.6160520607375272" focusTraversable="true" layoutX="497.0" layoutY="139.0" orientation="VERTICAL" prefHeight="463.0" prefWidth="258.0">
       <items>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" />
@@ -57,6 +52,13 @@
         </Menu>
       </menus>
     </MenuBar>
+    <Button fx:id="addTaskBtn" layoutX="424.0" layoutY="615.0" mnemonicParsing="false" prefHeight="56.0" prefWidth="84.0" onAction="#handleAddNewTask" />
+    <Label alignment="CENTER" layoutX="424.0" layoutY="664.0" prefHeight="24.0" prefWidth="84.0" text="Add Task">
+      <font>
+        <Font name="DejaVu Sans Mono Bold Oblique" size="13.0" fx:id="x1" />
+      </font>
+    </Label>
+    <Label alignment="CENTER" font="$x1" layoutX="738.0" layoutY="664.0" prefHeight="24.0" prefWidth="84.0" text="Month View" />
   </children>
   <stylesheets>
     <URL value="@AppStyle.css" />
