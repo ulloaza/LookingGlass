@@ -7,7 +7,6 @@
     -fx-background-position: center;
     -fx-background-radius: 5;
 }
-
 #addTaskBtn.button {
     -fx-background-color: TRANSPARENT;
     -fx-background-image: url("Images/menu.png");
@@ -16,12 +15,27 @@
     -fx-background-position: center;
     -fx-background-radius: 5;
 }
-
 #monthViewBtn.button {
     -fx-background-color: TRANSPARENT;
     -fx-background-image: url("Images/calendar.png");
     -fx-background-repeat: no-repeat;
     -fx-background-size: 60px 45px;
+    -fx-background-position: center;
+    -fx-background-radius: 5;
+}
+#arrowLeft.button {
+    -fx-background-color: TRANSPARENT;
+    -fx-background-image: url("Images/arrowleft.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: 60px 120px;
+    -fx-background-position: center;
+    -fx-background-radius: 5;
+}
+#arrowRight.button {
+    -fx-background-color: TRANSPARENT;
+    -fx-background-image: url("Images/arrowright.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: 60px 120px;
     -fx-background-position: center;
     -fx-background-radius: 5;
 }
