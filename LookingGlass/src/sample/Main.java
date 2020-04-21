@@ -1,4 +1,3 @@
-
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -18,13 +17,14 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
+        // Removes traditional header bar and handles making main panel style and colors.
         primaryStage.initStyle(StageStyle.TRANSPARENT);
         StackPane stackPane = new StackPane(createShadowPane());
         stackPane.setStyle(
                 "-fx-background-color: rgba(255, 255, 255, 0.7);" +
                         "-fx-background-insets: " + shadowSize + ";"
         );
-        //Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
+
         primaryStage.setTitle("Looking Glass v 1.0");
         Pane maskPane =  FXMLLoader.load(getClass().getResource("main.fxml"));
         stackPane.getChildren().add(maskPane);
@@ -52,7 +52,7 @@ public class Main extends Application {
         primaryStage.setScene(mainScene);
         primaryStage.show();
     }
-
+    // Create glow for transparent panel.
     private Pane createShadowPane() {
         Pane shadowPane = new Pane();
         shadowPane.setStyle(
