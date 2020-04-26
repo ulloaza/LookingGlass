@@ -35,6 +35,7 @@ import javafx.stage.Popup;
  */
 public class SimpleCalendar extends VBox{
 
+	public Date displayDate;
 	private Popup popup;
 	final simple_calendar.DatePicker datePicker;
 	
@@ -50,11 +51,13 @@ public class SimpleCalendar extends VBox{
 			@Override
 			public void changed(ObservableValue<? extends Date> ov,
 					Date oldDate, Date newDate) {
+				displayDate = newDate;
 				if (popup.isShowing())
 					popup.hide();
 				
 			}
 		});
+
 		popup.getContent().add(datePicker);
 
 		final Button calenderButton = new Button();
