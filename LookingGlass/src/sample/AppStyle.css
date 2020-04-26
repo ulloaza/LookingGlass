@@ -44,4 +44,4 @@
     -fx-effect: dropshadow(three-pass-box, darkred, 10, 0, 0, 0);
 }
 
-.menu-bar { -fx-background-color: TRANSPARENT; -fx-font-family: "DejaVu Sans Mono"; -fx-font-weight: bold}
+.menu-bar { -fx-background-color: TRANSPARENT; -fx-font-family: "Lucida Sans Mono"; -fx-font-weight: bold}
