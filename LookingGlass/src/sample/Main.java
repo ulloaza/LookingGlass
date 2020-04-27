@@ -1,3 +1,6 @@
+package sample;
+
+import java.util.GregorianCalendar;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -11,6 +14,10 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 public class Main extends Application {
+	public static MyCalendar cal = new MyCalendar();
+	public static GregorianCalendar date1 = new GregorianCalendar();
+    public static GregorianCalendar date2 = new GregorianCalendar();
+    public static GregorianCalendar date3 = new GregorianCalendar();
     private static final int shadowSize = 50;
     private double xOffset = 0;
     private double yOffset = 0;
@@ -85,6 +92,8 @@ public class Main extends Application {
 
 
     public static void main(String[] args) {
+    	date2.add(date1.DATE, 1);
+    	date3.add(date1.DATE, 2);
         launch(args);
     }
 }

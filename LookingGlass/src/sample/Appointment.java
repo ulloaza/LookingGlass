@@ -25,7 +25,7 @@ public class Appointment implements Serializable {
 	 * @param - String task, String time, int day, int month, int year
 	 * 
 	 */
-	public Appointment(String task, int startHour, int startMinute, int endHour, int endMinute, int day, int month, int year) {
+	public Appointment(String task, int startHour, int startMinute, int endHour, int endMinute, int day, int month, int year, boolean privacy) {
 		this.task = task;
 		this.startHour = startHour;
 		this.startMinute = startMinute;
@@ -34,6 +34,7 @@ public class Appointment implements Serializable {
 		this.day = day;
 		this.month = month;
 		this.year = year;
+		this.privacy = privacy;
 	}
 	public Appointment(int startHour, int startMinute, int endHour, int endMinute, int day, int month, int year) {
 		this.startHour = startHour;
@@ -104,7 +105,7 @@ public class Appointment implements Serializable {
 	 * @purpose - get privacy setting 
 	 * @returns privacy
 	 */
-	public boolean getPrivacySetting() {
+	public boolean isPrivate() {
 		return privacy;
 	}
 	/*
@@ -141,7 +142,10 @@ public class Appointment implements Serializable {
 	 * @purpose - toString method format: 9:00: Task info
 	 */
 	public String toString() {
-		return startHour + ":" + startMinute + "-"  + task;
+		String start = AppointCont.convertTo12(startHour + ":" + startMinute);
+		String end = AppointCont.convertTo12(endHour + ":" + endMinute);
+
+		return start + "-" + end + "--"  + task;
 	}
 	/*
 	 * @purpose - Compares appointment classes to check if the task is the same

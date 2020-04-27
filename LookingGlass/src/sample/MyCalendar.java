@@ -13,20 +13,18 @@ import java.util.GregorianCalendar;
  */
 public class MyCalendar implements Serializable {
 	
-	/*stores username/password*/
+	//stores username/password
 	private String user, password;
-	/*stores list of all available users*/
-	private static ArrayList<String> userList = new ArrayList<String>();
-	
-	
-	
-	private static String months[] = {"", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
-	private static int daysInMonth[] = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
-	
-	/*A dynamic array of all the days holing appointment/note information*/
+	//stores list of all available users
+	private static ArrayList<String> userList = new ArrayList<String>();	
+	//A dynamic array of all the days holing appointment/note information
 	private ArrayList<Day> dayList = new ArrayList<Day>();
+
+	public static final String days[] = {"", "Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"};
+    
 	/*
 	 * Invalid constructor for MyCalendar
+	 * @purpose - used to create invalid object and load another object into it
 	 */
 	public MyCalendar() {
 		
@@ -55,14 +53,6 @@ public class MyCalendar implements Serializable {
 		return userList;
 	}
 	/*
-	 * @purpose returns the numbers of days withing a given month
-	 * @param - int month - 1,12
-	 * @return numbers of days withing the month array
-	 */
-	public static int getDaysInMonth(int month) {
-		return daysInMonth[month];
-	}
-	/*
 	 * @purpose check if given year is a leap year
 	 * @return - boolean 
 	 */
@@ -73,9 +63,6 @@ public class MyCalendar implements Serializable {
 		else {
 			return false;
 		}
-	}
-	public static String monthToString(int month) {
-		return months[month];
 	}
 	/*
 	 * @purpose return user calendars name
@@ -90,7 +77,7 @@ public class MyCalendar implements Serializable {
 		return password;
 	}
 	/*
-	 * @pupose return the index of a particular day from the arraylist
+	 * @purpose return the index of a particular day from the arraylist
 	 * @returns i - index
 	 */
 	public int findDay(Day day) {
@@ -109,8 +96,12 @@ public class MyCalendar implements Serializable {
 	 * @purpose creates new appointment 
 	 * @param String task, String startTime, String endTime, int day, int month, int year
 	 */
-	public void createAppointment(String task, int startHour, int startMinute, int endHour, int endMinute, int day, int month, int year) {
-		Appointment appt = new Appointment(task, startHour, startMinute, endHour, endMinute, day, month, year);
+	public void createAppointment(String task, int startHour, int startMinute, int endHour, int endMinute, int day, int month, int year, boolean privacy) {
+		Appointment appt = new Appointment(task, startHour, startMinute, endHour, endMinute, day, month, year, privacy);
+		//check to see if there is a collision
+		if(isTimeTaken(appt)) {
+			return;
+		}
 		Day calDay = new Day(day, month, year);
 		int index = findDay(calDay);
 		/*if day does not exists yet, then create new day obj*/
@@ -125,21 +116,26 @@ public class MyCalendar implements Serializable {
 		}
 	}
 	/*
-	 * @purpose deletes  appointment 
-	 * @param String task, String startTime, String endTime, int day, int month, int year
+	 * @purpose - deletes an appointment from a specific day
+	 * 
 	 */
-	public void deleteAppointment(int startHour, int startMinute, int endHour, int endMinute, int day, int month, int year) {
+	public void deleteAppointment(int index, int day, int month, int year) {
 		Day calDay = new Day(day, month, year);
-		int index = findDay(calDay);
+		int i = findDay(calDay);
 		if(index == -1) {
 			return;
 		}
 		else {
-			calDay = dayList.get(index);
-			Appointment tempAppt = new Appointment(startHour, startMinute, endHour, endMinute, day, month, year);
-			calDay.removeAppointment(tempAppt);
+			calDay = dayList.get(i);
+			//make sure index is not out of bounds
+			if(calDay.getAppointments().size() < index) {
+				return;
+			}
+			
+			calDay.removeAppointment(index - 1);
 		}
 	}
+	
 	/*
 	 * @purpose edits  appointment 
 	 * @param String task, String startTime, String endTime, int day, int month, int year, String newTask
@@ -152,10 +148,10 @@ public class MyCalendar implements Serializable {
 		}
 		else {
 			calDay = dayList.get(index);
-			Appointment tempAppt = new Appointment(startHour, startMinute, endHour, endMinute, day, month, year);
-			calDay.removeAppointment(tempAppt);
-			tempAppt = new Appointment(newTask, newStartHour, newStartMinute, newEndHour, newEndMinute, day, month, year);
-			calDay.addAppointment(tempAppt);
+		//	Appointment tempAppt = new Appointment(startHour, startMinute, endHour, endMinute, day, month, year);
+			//calDay.removeAppointment(tempAppt);
+			//tempAppt = new Appointment(newTask, newStartHour, newStartMinute, newEndHour, newEndMinute, day, month, year);
+			//calDay.addAppointment(tempAppt);
 		}
 	}
 	/*
@@ -177,15 +173,19 @@ public class MyCalendar implements Serializable {
 	 * @purpose deletes note 
 	 * @param String note, int day, int month, int year
 	 */
-	public void deleteNote(String note, int day, int month, int year) {
+	public void deleteNote(int index, int day, int month, int year) {
 		Day calDay = new Day(day, month, year);
-		int index = findDay(calDay);
-		if(index == -1) {
+		int i = findDay(calDay);
+		if(i == -1) {
 			return;
 		}
 		else {
-			calDay = dayList.get(index);
-			calDay.removeNote(note);
+			calDay = dayList.get(i);
+			
+			if(calDay.getNotes().size() < index) {
+				return;
+			}
+			calDay.removeNote(index - 1);
 		}
 	}
 	/*

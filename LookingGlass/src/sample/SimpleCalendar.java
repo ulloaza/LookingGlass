@@ -1,3 +1,4 @@
+ 
 /**   
 *  This file is part of SimpleCalendar.
     
@@ -10,11 +11,10 @@
 *  but WITHOUT ANY WARRANTY; without even the implied warranty of   
 *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the   
 *  GNU General Public License for more details.
-
 *  <http://www.gnu.org/licenses/>.
      
 */  
-package simple_calendar;
+package sample;
 
 import java.util.Date;
 
@@ -37,7 +37,7 @@ public class SimpleCalendar extends VBox{
 
 	public Date displayDate;
 	private Popup popup;
-	final simple_calendar.DatePicker datePicker;
+	final DatePicker datePicker;
 	
 	public SimpleCalendar() {
 		popup = new Popup();
@@ -45,7 +45,7 @@ public class SimpleCalendar extends VBox{
 		popup.setAutoFix(true);
 		popup.setHideOnEscape(true);
 
-		datePicker = new simple_calendar.DatePicker();
+		datePicker = new DatePicker();
 		datePicker.dateProperty().addListener(new ChangeListener<Date>() {
 
 			@Override

@@ -47,21 +47,10 @@ public class Day implements Serializable {
 		appointmentList.add(appt);
 		
 	}
-	/*
-	 * @purpose - remove an appt from the arraylist
-	 * @param - String task
-	 */
-	public void removeAppointment(Appointment appt) {
-		for(int i = 0;i<appointmentList.size();i++) {
-			/*create temp appointment obj*/
-			Appointment temp = appointmentList.get(i);
-			/*checking to see if tasks are the same*/
-			if(appt.equals(temp)) {
-				appointmentList.remove(i);
-				return;
-			}
-		}
-	} 
+	public void removeAppointment(int index) {
+		appointmentList.remove(index);
+	}
+		
 	/*
 	 * @purpose - edit an appt from the arraylist
 	 * @param - String task, String newTask
@@ -95,10 +84,8 @@ public class Day implements Serializable {
 	 * @purpose - remove an note from the arraylist
 	 * @param - String note
 	 */
-	public void removeNote(String note) {
-		if(noteList.contains(note)) {
-			noteList.remove(note);
-		}
+	public void removeNote(int index) {
+		noteList.remove(index);
 	}
 	/*
 	 * @purpose get appointments list
@@ -184,7 +171,8 @@ public class Day implements Serializable {
 	 * @purpose toString method for day class format: 03/16/20
 	 * @returns String representation
 	 */
-	public String dateToString() {
+	@Override
+	public String toString() {
 		return month + "/" + day + "/" + year;
 	}
 	/*

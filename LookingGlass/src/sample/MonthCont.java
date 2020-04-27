@@ -1,4 +1,7 @@
+package sample;
+
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -13,11 +16,21 @@ import java.io.IOException;
 public class MonthCont {
     @FXML
     public HBox calendarBox;
+    SimpleCalendar calWidget = new SimpleCalendar();
+    DatePicker calDateWidget = new DatePicker();
+    
+    EventHandler<ActionEvent> event = new EventHandler<ActionEvent>() { 
+        public void handle(ActionEvent e) 
+        { 
+        	
+        } 
+    }; 
+
 
     public void initialize() {
-        simple_calendar.SimpleCalendar calWidget = new simple_calendar.SimpleCalendar();
-        simple_calendar.DatePicker calDateWidget = new simple_calendar.DatePicker();
-        calendarBox.getChildren().addAll(calDateWidget, calWidget);
+       
+        calendarBox.getChildren().addAll(calWidget, calDateWidget);
+       
     }
 
     public void handleAddNewTask(ActionEvent event) {
@@ -39,5 +52,6 @@ public class MonthCont {
         taskStage.setTitle("Add New Task...");
         taskStage.setScene(taskScene);
         taskStage.show();
+        
     }
 }

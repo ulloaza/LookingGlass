@@ -14,7 +14,7 @@
 *  <http://www.gnu.org/licenses/>.
      
 */  
-package simple_calendar;
+package sample;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;

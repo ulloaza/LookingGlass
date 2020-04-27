@@ -52,11 +52,13 @@ public class Persistence {
 			
 		}
 		catch(IOException e) {
-			
+			System.out.println(calendar.getUser());
+
 		}
 		catch(ClassNotFoundException e) {
-			
+
 		}
+
 		return calendar;
 	}
 	/*
