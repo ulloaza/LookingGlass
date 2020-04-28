@@ -106,6 +106,7 @@ public class Day implements Serializable {
 	 * @param - notes
 	 */
 	public void addNote(String note) {
+		System.out.printf("Debug: note was added %s\n", note);
 		noteList.add(note);
 	}
 	/*

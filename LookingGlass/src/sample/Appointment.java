@@ -19,6 +19,7 @@ public class Appointment implements Serializable {
 	private boolean privacy;	
 	/*appt date*/
 	private int day, month, year;
+
 	
 
 	/*Constructor
@@ -160,5 +161,7 @@ public class Appointment implements Serializable {
 			return false;
 		}
 	}
+	
+
 
 }

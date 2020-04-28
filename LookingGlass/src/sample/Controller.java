@@ -29,7 +29,6 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.io.*;
 import java.net.URL;
-import java.text.SimpleDateFormat;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -39,7 +38,7 @@ public class Controller implements Initializable{
     @FXML
     AnchorPane top1, top2, top3;
     @FXML
-    Label label1, label2, label3, day1, day2, day3;
+    Label label1, label2, label3, day1, day2, day3, username;
     @FXML
     TextFlow textflow1, textflow2, textflow3, task1, task2, task3;
     @FXML
@@ -94,8 +93,15 @@ public class Controller implements Initializable{
         Scene taskScene = new Scene(addTask, 230, 100);
         Stage taskStage = new Stage();
         try {
-            Pane mask = FXMLLoader.load(getClass().getResource("appoint.fxml"));
+        	FXMLLoader loader = new FXMLLoader(getClass().getResource("appoint.fxml"));
+            Pane mask = loader.load();
             addTask.getChildren().add(mask);
+            
+            //getting the controller from main.fxml
+            AppointCont controller = (AppointCont) loader.getController();
+            
+            // pass the mainController to the AppointmentController 
+            controller.init(this);
         }
         catch(IOException e) {
             e.printStackTrace();
@@ -115,8 +121,15 @@ public class Controller implements Initializable{
         Scene taskScene = new Scene(addTask, 230, 100);
         Stage taskStage = new Stage();
         try {
-            Pane mask = FXMLLoader.load(getClass().getResource("monthView.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("monthView.fxml"));
+            Pane mask = loader.load();
             addTask.getChildren().add(mask);
+            
+            //getting the controller from main.fxml
+            MonthCont controller = (MonthCont) loader.getController();
+            
+            // pass the mainController to the MonthViewController 
+            controller.init(this);
         }
         catch(IOException e) {
             e.printStackTrace();
@@ -301,6 +314,10 @@ public class Controller implements Initializable{
     	task1.getChildren().clear();
     	task2.getChildren().clear();
     	task3.getChildren().clear();
+    	
+    	loadLoginStatus();
+
+    	
     	//setting the labels at the top of the pane to the appropriate date
     	day1.setText(MyCalendar.days[date1.get(date1.DAY_OF_WEEK)] + " " + (date1.get(date1.MONTH) + 1) + "/" + date1.get(date1.DATE) + "/" + date1.get(date1.YEAR));
 		
@@ -316,8 +333,7 @@ public class Controller implements Initializable{
 			for(Appointment appt : appts) { 
 				Text text = new Text(appt.toString() + "\n\n");
 				
-				ObservableList list = textflow1.getChildren(); 
-				list.addAll(text);
+				textflow1.getChildren().add(text);
 			}
 		}
 		ArrayList<String> notes = cal.getNotesSpecifiedDate(date1.get(date1.DATE), date1.get(date1.MONTH) + 1, date1.get(date1.YEAR));
@@ -396,10 +412,20 @@ public class Controller implements Initializable{
 		weather = Weather.getWeather(diff+2);
 		label3.setText(String.valueOf(weather[1]) + "°/" + String.valueOf(weather[0]) + "°");
     }
+    
+    
+    public void loadLoginStatus() {
+		if(cal.getUser() == null)
+			username.setText("Not logged in");
+		else
+			username.setText("Hello, " + cal.getUser() );
+    }
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub		
+		
+		loadLoginStatus();
 		
 		day1.setText(MyCalendar.days[date1.get(date1.DAY_OF_WEEK)] + " " + (date1.get(date1.MONTH) + 1) + "/" + date1.get(date1.DATE) + "/" + date1.get(date1.YEAR));
 		

@@ -16,6 +16,8 @@ import java.io.IOException;
 public class MonthCont {
     @FXML
     public HBox calendarBox;
+	private Controller mainController;
+    
     SimpleCalendar calWidget = new SimpleCalendar();
     DatePicker calDateWidget = new DatePicker();
     
@@ -52,6 +54,10 @@ public class MonthCont {
         taskStage.setTitle("Add New Task...");
         taskStage.setScene(taskScene);
         taskStage.show();
-        
     }
+    
+	public void init(Controller mainController)
+	{
+		this.mainController = mainController;
+	}
 }

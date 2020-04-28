@@ -53,7 +53,7 @@ public class Main extends Application {
 
         Scene mainScene = new Scene(stackPane, 1250, 750);
         mainScene.setFill(Color.TRANSPARENT);
-        maskPane.getStylesheets().add("AppStyle.css");
+        maskPane.getStylesheets().add(getClass().getResource("AppStyle.css").toExternalForm());
         maskPane.setLayoutX(200);
         maskPane.setLayoutY(300);
         primaryStage.setScene(mainScene);

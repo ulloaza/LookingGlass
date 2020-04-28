@@ -125,6 +125,7 @@
       <Label fx:id="day1" layoutX="272.0" layoutY="114.0" prefHeight="17.0" prefWidth="102.0" textAlignment="JUSTIFY" />
       <Label fx:id="day2" layoutX="571.0" layoutY="114.0" prefHeight="17.0" prefWidth="102.0" textAlignment="JUSTIFY" />
       <Label fx:id="day3" layoutX="890.0" layoutY="114.0" prefHeight="17.0" prefWidth="102.0" textAlignment="JUSTIFY" />
+      <Label fx:id="username" layoutX="1070.0" layoutY="106.0" text="Label" />
   </children>
   <stylesheets>
     <URL value="@AppStyle.css" />

@@ -15,14 +15,18 @@ import java.util.Date;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
+import javafx.stage.Window;
+
 import static sample.Main.cal;
 import static sample.Main.date1;
 import static sample.Main.date2;
@@ -42,7 +46,10 @@ public class AppointCont {
     private RadioButton todo, appt;
     @FXML
     private CheckBox privacy;
-
+    @FXML
+    private Label message;
+    
+	private Controller mainController;
     /*
      * @purpose button handler for closing event
      */
@@ -81,6 +88,11 @@ public class AppointCont {
         		
         		cal.createAppointment(title + ":\n" + desc, startHour, startMin, endHour, endMin, day, month, year, privacy.isSelected());	
     		}
+    		else
+    		{
+    			message.setText("Incorrect input format");
+    			return;
+    		}
     	}
     	else if(toggleGroup.getSelectedToggle() == todo) {
     		
@@ -98,14 +110,14 @@ public class AppointCont {
     	//save calendar
     	Persistence.save(cal);
 
-    	//get main controller so I can call load method
-    	FXMLLoader loader = new FXMLLoader(getClass().getResource("main.fxml"));
-        Parent root = loader.load();
-        //getting the controller from main.fxml
-        Controller controller = loader.getController();  
-
         //call load method - bug for some reason it doesn't load. Have to use arrow buttons to refresh then it will load
-        controller.loadInfo(date1, date2, date3);
+        mainController.loadInfo(date1, date2, date3);
+        // close window after creation
+        Window window =   ((Node)(event.getSource())).getScene().getWindow(); 
+        if (window instanceof Stage){
+            ((Stage) window).close();
+        }
+        message.setText("");
     }
     /*
      * @purpose - convert input time to military for easy collision detection
@@ -151,4 +163,9 @@ public class AppointCont {
         }
         return output;
     }
+    
+	public void init(Controller mainController)
+	{
+		this.mainController = mainController;
+	}
 }
