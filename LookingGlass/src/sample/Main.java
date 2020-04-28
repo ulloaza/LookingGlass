@@ -35,7 +35,6 @@ public class Main extends Application {
         primaryStage.setTitle("Looking Glass v 1.0");
         Pane maskPane =  FXMLLoader.load(getClass().getResource("main.fxml"));
         stackPane.getChildren().add(maskPane);
-
         stackPane.setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {

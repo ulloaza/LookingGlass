@@ -1,3 +1,7 @@
+@font-face {
+    src: url("Images/DejaVu.ttf");
+}
+
 #closeButton.button {
     opacity: 0.6;
     -fx-background-color: TRANSPARENT;
@@ -40,8 +44,15 @@
     -fx-background-radius: 5;
 }
 
+.label {
+    -fx-font-family: 'DejaVu Sans Mono Bold';
+}
+
 .button:hover {
     -fx-effect: dropshadow(three-pass-box, darkred, 10, 0, 0, 0);
 }
 
-.menu-bar { -fx-background-color: TRANSPARENT; -fx-font-family: "Lucida Sans Mono"; -fx-font-weight: bold}
+.menu-bar {
+    -fx-background-color: TRANSPARENT;
+    -fx-font-family: 'DejaVu Sans Mono';
+}
