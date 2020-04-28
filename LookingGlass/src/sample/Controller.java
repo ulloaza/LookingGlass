@@ -25,9 +25,11 @@ import static sample.Main.date1;
 import static sample.Main.date2;
 import static sample.Main.date3;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.io.*;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -44,6 +46,8 @@ public class Controller implements Initializable{
     ScrollPane flow1;
     @FXML
     AppointCont appointCont;
+    @FXML
+    ImageView weather1, weather2, weather3;
     
 	// Button event handlers
     public void handleCloseButtonAction(ActionEvent event) {
@@ -58,7 +62,13 @@ public class Controller implements Initializable{
     	date2.add(date2.DATE, -3);
     	date3.add(date3.DATE, -3);
     	loadInfo(date1, date2, date3);
-
+    	
+    	try {
+			loadWeathers(date1);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
     /*
      * @purpose handles right arrow button increasing date
@@ -68,6 +78,13 @@ public class Controller implements Initializable{
     	date2.add(date2.DATE, 3);
     	date3.add(date3.DATE, 3);
     	loadInfo(date1, date2, date3);
+    	
+    	try {
+			loadWeathers(date1);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 
     public void handleAddNewTask(ActionEvent event) {
@@ -354,6 +371,31 @@ public class Controller implements Initializable{
 			}
 		}
     }
+    
+    // giving date1, load all remaining weathers
+    public void loadWeathers(GregorianCalendar date) throws IOException
+    {
+    	Date date1 = date.getTime();
+    			
+    	int diff=  (int) (date1.getTime()- new Date().getTime())/86400000;
+    	
+    	if(diff < 0 ) {
+    		System.out.println("weather history is currently not supported\n");
+    		diff=0;
+    	}
+    	
+		weather1.setImage(Weather.getIcon(diff));
+		int weather[] = Weather.getWeather(diff);
+		label1.setText(String.valueOf(weather[1]) + "°/" + String.valueOf(weather[0]) + "°");
+	
+		weather2.setImage(Weather.getIcon(diff+1));
+		weather = Weather.getWeather(diff+1);
+		label2.setText(String.valueOf(weather[1]) + "°/" + String.valueOf(weather[0]) + "°");
+
+		weather3.setImage(Weather.getIcon(diff+2));
+		weather = Weather.getWeather(diff+2);
+		label3.setText(String.valueOf(weather[1]) + "°/" + String.valueOf(weather[0]) + "°");
+    }
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -365,30 +407,8 @@ public class Controller implements Initializable{
 		
     	day3.setText(MyCalendar.days[date3.get(date3.DAY_OF_WEEK)] + " " + (date3.get(date3.MONTH) + 1) + "/" + date3.get(date3.DATE) + "/" + date3.get(date3.YEAR));
 
-		try {
-			ImageView icon1 = Weather.getIcon(0);
-			int weather[] = Weather.getWeather(0);
-			label1.setText(String.valueOf(weather[1]) + "°/" + String.valueOf(weather[0]) + "°");
-		
-			ImageView icon2 = Weather.getIcon(1);
-			weather = Weather.getWeather(1);
-			label2.setText(String.valueOf(weather[1]) + "°/" + String.valueOf(weather[0]) + "°");
-
-			ImageView icon3 = Weather.getIcon(2);
-			weather = Weather.getWeather(2);
-			label3.setText(String.valueOf(weather[1]) + "°/" + String.valueOf(weather[0]) + "°");
-
-			icon1.setFitHeight(80);
-			icon1.setFitWidth(95);
-			icon2.setFitHeight(80);
-			icon2.setFitWidth(95);	
-			icon3.setFitHeight(80);
-
-			icon3.setFitWidth(95);
-			top1.getChildren().add(icon1);
-			top2.getChildren().add(icon2);
-			top3.getChildren().add(icon3);
-		
+    	try {
+			loadWeathers(date1);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

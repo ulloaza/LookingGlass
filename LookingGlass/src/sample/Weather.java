@@ -44,7 +44,7 @@ public class Weather {
 	 * @purpose gets the url for the given weather icon on a given day
 	 * @returns icon image
 	 */
-	public static ImageView getIcon(int day) throws IOException{
+	public static Image getIcon(int day) throws IOException{
 		URL call = new URL(url);
 		URLConnection u = call.openConnection();
 		BufferedReader input = new BufferedReader(new InputStreamReader(u.getInputStream()));
@@ -54,8 +54,7 @@ public class Weather {
 		String icon = dataArray.getJSONObject(day).getJSONArray("weather").getJSONObject(0).getString("icon");
 		
 		Image image = new Image(imageUrl + icon + ".png");
-        ImageView imageView = new ImageView(image); 
-        return imageView;
+        return image;
 	}	
 }
 
