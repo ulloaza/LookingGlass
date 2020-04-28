@@ -2,16 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4a4f35f4-adfd-4cfd-9cc6-96bc335e4928" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/git_LookingGlass.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/LookingGlass.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/LookingGlass/src/sample/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/LookingGlass/src/sample/Controller.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/LookingGlass/src/sample/main.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/LookingGlass/src/sample/main.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/LookingGlass/src/sample/readme.txt" beforeDir="false" afterPath="$PROJECT_DIR$/LookingGlass/src/sample/readme.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LookingGlass/src/sample/appoint.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/LookingGlass/src/sample/appoint.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,6 +58,7 @@
       <updated>1588104607217</updated>
       <workItem from="1588104612239" duration="541000" />
       <workItem from="1588105396938" duration="4619000" />
+      <workItem from="1588111026746" duration="315000" />
     </task>
     <servers />
   </component>
