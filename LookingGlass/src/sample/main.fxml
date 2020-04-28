@@ -1,39 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.image.*?>
 <?import java.lang.*?>
 <?import java.net.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
+<?scenebuilder-classpath-element ../../../json-20190722.jar?>
 
-<AnchorPane fx:id="anchor" opacity="1.0" prefHeight="800.0" prefWidth="1300.0" visible="true" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+<AnchorPane fx:id="anchor" opacity="1.0" prefHeight="800.0" prefWidth="1300.0" visible="true" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="sample.Controller">
   <children>
-    <SplitPane dividerPositions="0.6941431670281996" focusTraversable="true" layoutX="180.0" layoutY="139.0" orientation="VERTICAL" prefHeight="463.0" prefWidth="258.0">
+    <SplitPane fx:id="split1" dividerPositions="0.5010845986984815" focusTraversable="true" layoutX="180.0" layoutY="139.0" orientation="VERTICAL" prefHeight="463.0" prefWidth="258.0">
       <items>
         <AnchorPane fx:id="top1" minHeight="0.0" minWidth="0.0" prefHeight="314.0" prefWidth="256.0">
-               <children>
-                  <ImageView fx:id="weather1" fitHeight="71.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true" />
-                  <Label fx:id="label1" layoutX="87.0" layoutY="11.0" prefHeight="50.0" prefWidth="84.0">
-                     <font>
-                        <Font name="Calibri" size="24.0" />
-                     </font>
-                  </Label>
-                  <ScrollPane layoutX="22.0" layoutY="80.0" prefHeight="353.0" prefWidth="213.0">
-                     <content>
-                        <TextFlow fx:id="textflow1" prefHeight="200.0" prefWidth="200.0" />
-                     </content>
-                  </ScrollPane>
-               </children></AnchorPane>
+          <children>
+            <ImageView fx:id="weather1" fitHeight="71.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true" />
+            <Label fx:id="label1" layoutX="87.0" layoutY="11.0" prefHeight="50.0" prefWidth="84.0">
+              <font>
+                <Font size="24.0" fx:id="x2" />
+              </font>
+            </Label>
+            <VBox fx:id="tcontent1" layoutX="0.0" layoutY="71.0" prefHeight="157.0" prefWidth="256.0">
+              <TextFlow fx:id="textflow1" prefHeight="200.0" prefWidth="200.0" />
+            </VBox>
+          </children>
+        </AnchorPane>
         <AnchorPane fx:id="bottom1" minHeight="0.0" minWidth="0.0" prefHeight="129.0" prefWidth="256.0">
-               <children>
-                  <ScrollPane layoutX="22.0" layoutY="12.0" prefHeight="115.0" prefWidth="213.0">
-                     <content>
-                        <TextFlow fx:id="task1" prefHeight="200.0" prefWidth="200.0" />
-                     </content>
-                  </ScrollPane>
-               </children>
-            </AnchorPane>
+          <children>
+            <VBox fx:id="bcontent1" layoutX="0.0" layoutY="0.0" prefHeight="227.0" prefWidth="256.0" >
+              <TextFlow fx:id="task1" prefHeight="200.0" prefWidth="200.0" />
+            </VBox>
+          </children>
+        </AnchorPane>
       </items>
     </SplitPane>
     <Button fx:id="monthViewBtn" layoutX="736.0" layoutY="614.0" mnemonicParsing="false" onAction="#handleMonthView" prefHeight="56.0" prefWidth="84.0" />
@@ -70,62 +68,50 @@
     <Label alignment="CENTER" font="$x1" layoutX="738.0" layoutY="664.0" prefHeight="24.0" prefWidth="84.0" text="Month View" />
     <Button fx:id="arrowLeft" layoutX="68.0" layoutY="283.0" mnemonicParsing="false" onAction="#leftClick" prefHeight="167.0" prefWidth="68.0" />
     <Button fx:id="arrowRight" layoutX="1118.0" layoutY="283.0" mnemonicParsing="false" onAction="#rightClick" prefHeight="167.0" prefWidth="68.0" />
-    <SplitPane dividerPositions="0.6984815618221258" focusTraversable="true" layoutX="493.0" layoutY="139.0" orientation="VERTICAL" prefHeight="463.0" prefWidth="258.0">
+    <SplitPane fx:id="split2" dividerPositions="0.5010845986984815" focusTraversable="true" layoutX="493.0" layoutY="139.0" orientation="VERTICAL" prefHeight="463.0" prefWidth="258.0">
       <items>
         <AnchorPane fx:id="top2" minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
-               <children>
-                  <Label fx:id="label2" layoutX="87.0" layoutY="11.0" prefHeight="50.0" prefWidth="84.0">
-                     <font>
-                        <Font name="Calibri" size="24.0" />
-                     </font>
-                  </Label>
-                  <ImageView fx:id="weather2" fitHeight="71.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true" />
-                  <ScrollPane layoutX="22.0" layoutY="80.0" prefHeight="353.0" prefWidth="213.0">
-                     <content>
-                        <TextFlow fx:id="textflow2" prefHeight="200.0" prefWidth="200.0" />
-                     </content>
-                  </ScrollPane>
-               </children></AnchorPane>
+          <children>
+            <Label fx:id="label2" font="$x2" layoutX="87.0" layoutY="11.0" prefHeight="50.0" prefWidth="84.0" />
+            <ImageView fx:id="weather2" fitHeight="71.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true" />
+            <VBox id="tcontent2" layoutX="0.0" layoutY="76.0" prefHeight="157.0" prefWidth="256.0">
+              <TextFlow fx:id="textflow2" prefHeight="200.0" prefWidth="200.0" />
+            </VBox>
+          </children>
+        </AnchorPane>
         <AnchorPane fx:id="bottom2" minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
-               <children>
-                  <ScrollPane layoutX="22.0" layoutY="11.0" prefHeight="115.0" prefWidth="213.0">
-                     <content>
-                        <TextFlow fx:id="task2" prefHeight="200.0" prefWidth="200.0" />
-                     </content>
-                  </ScrollPane>
-               </children></AnchorPane>
+          <children>
+            <VBox fx:id="bcontent2" layoutX="0.0" layoutY="0.0" prefHeight="227.0" prefWidth="256.0" >
+              <TextFlow fx:id="task2" prefHeight="200.0" prefWidth="200.0" />
+            </VBox>
+          </children>
+        </AnchorPane>
       </items>
     </SplitPane>
-    <SplitPane dividerPositions="0.7049891540130152" focusTraversable="true" layoutX="812.0" layoutY="139.0" orientation="VERTICAL" prefHeight="463.0" prefWidth="258.0">
+    <SplitPane fx:id="split3" dividerPositions="0.5010845986984815" focusTraversable="true" layoutX="812.0" layoutY="139.0" orientation="VERTICAL" prefHeight="463.0" prefWidth="258.0">
       <items>
         <AnchorPane fx:id="top3" minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
-               <children>
-                  <Label fx:id="label3" layoutX="86.0" layoutY="14.0" prefHeight="50.0" prefWidth="84.0">
-                     <font>
-                        <Font name="Calibri" size="24.0" />
-                     </font>
-                  </Label>
-                  <ImageView fx:id="weather3" fitHeight="71.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true" />
-                  <ScrollPane layoutX="22.0" layoutY="80.0" prefHeight="353.0" prefWidth="213.0">
-                     <content>
-                        <TextFlow fx:id="textflow3" prefHeight="200.0" prefWidth="200.0" />
-                     </content>
-                  </ScrollPane>
-               </children></AnchorPane>
+          <children>
+            <Label fx:id="label3" font="$x2" layoutX="86.0" layoutY="14.0" prefHeight="50.0" prefWidth="84.0" />
+            <ImageView fx:id="weather3" fitHeight="71.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true" />
+            <VBox id="tcontent3" layoutX="0.0" layoutY="76.0" prefHeight="157.0" prefWidth="256.0">
+              <TextFlow fx:id="textflow3" prefHeight="200.0" prefWidth="200.0" />
+            </VBox>
+          </children>
+        </AnchorPane>
         <AnchorPane fx:id="bottom3" minHeight="0.0" minWidth="0.0" prefHeight="158.0" prefWidth="256.0">
-               <children>
-                  <ScrollPane layoutX="22.0" layoutY="9.0" prefHeight="115.0" prefWidth="213.0">
-                     <content>
-                        <TextFlow fx:id="task3" prefHeight="200.0" prefWidth="200.0" />
-                     </content>
-                  </ScrollPane>
-               </children></AnchorPane>
+          <children>
+            <VBox fx:id="bcontent3" layoutX="0.0" layoutY="0.0" prefHeight="227.0" prefWidth="256.0" >
+              <TextFlow fx:id="task3" prefHeight="200.0" prefWidth="200.0" />
+            </VBox>
+          </children>
+        </AnchorPane>
       </items>
     </SplitPane>
-      <Label fx:id="day1" layoutX="272.0" layoutY="114.0" prefHeight="17.0" prefWidth="102.0" textAlignment="JUSTIFY" />
-      <Label fx:id="day2" layoutX="571.0" layoutY="114.0" prefHeight="17.0" prefWidth="102.0" textAlignment="JUSTIFY" />
-      <Label fx:id="day3" layoutX="890.0" layoutY="114.0" prefHeight="17.0" prefWidth="102.0" textAlignment="JUSTIFY" />
-      <Label fx:id="username" layoutX="1070.0" layoutY="106.0" text="Label" />
+    <Label fx:id="day1" layoutX="272.0" layoutY="114.0" prefHeight="17.0" prefWidth="102.0" textAlignment="JUSTIFY" />
+    <Label fx:id="day2" layoutX="571.0" layoutY="114.0" prefHeight="17.0" prefWidth="102.0" textAlignment="JUSTIFY" />
+    <Label fx:id="day3" layoutX="890.0" layoutY="114.0" prefHeight="17.0" prefWidth="102.0" textAlignment="JUSTIFY" />
+    <Label fx:id="username" layoutX="940.0" layoutY="63.0" text="Label" />
   </children>
   <stylesheets>
     <URL value="@AppStyle.css" />

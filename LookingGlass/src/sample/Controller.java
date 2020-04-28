@@ -10,11 +10,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Modality;
@@ -42,12 +38,13 @@ public class Controller implements Initializable{
     @FXML
     TextFlow textflow1, textflow2, textflow3, task1, task2, task3;
     @FXML
-    ScrollPane flow1;
+    VBox tcontent1, bcontent1, tcontent2, bcontent2, tcontent3, bcontent3;
     @FXML
     AppointCont appointCont;
     @FXML
     ImageView weather1, weather2, weather3;
-    
+
+
 	// Button event handlers
     public void handleCloseButtonAction(ActionEvent event) {
         Stage stage = (Stage) closeButton.getScene().getWindow();
@@ -307,6 +304,12 @@ public class Controller implements Initializable{
     }
   
     public void loadInfo(GregorianCalendar date1, GregorianCalendar date2, GregorianCalendar date3) {
+        tcontent1.setVgrow(textflow1, Priority.ALWAYS);
+        tcontent2.setVgrow(textflow2, Priority.ALWAYS);
+        tcontent3.setVgrow(textflow3, Priority.ALWAYS);
+        bcontent1.setVgrow(task1, Priority.ALWAYS);
+        bcontent2.setVgrow(task2, Priority.ALWAYS);
+        bcontent3.setVgrow(task3, Priority.ALWAYS);
 
     	textflow1.getChildren().clear();
     	textflow2.getChildren().clear();
@@ -402,15 +405,15 @@ public class Controller implements Initializable{
     	
 		weather1.setImage(Weather.getIcon(diff));
 		int weather[] = Weather.getWeather(diff);
-		label1.setText(String.valueOf(weather[1]) + "°/" + String.valueOf(weather[0]) + "°");
+		label1.setText(String.valueOf(weather[1]) + "ï¿½/" + String.valueOf(weather[0]) + "ï¿½");
 	
 		weather2.setImage(Weather.getIcon(diff+1));
 		weather = Weather.getWeather(diff+1);
-		label2.setText(String.valueOf(weather[1]) + "°/" + String.valueOf(weather[0]) + "°");
+		label2.setText(String.valueOf(weather[1]) + "ï¿½/" + String.valueOf(weather[0]) + "ï¿½");
 
 		weather3.setImage(Weather.getIcon(diff+2));
 		weather = Weather.getWeather(diff+2);
-		label3.setText(String.valueOf(weather[1]) + "°/" + String.valueOf(weather[0]) + "°");
+		label3.setText(String.valueOf(weather[1]) + "ï¿½/" + String.valueOf(weather[0]) + "ï¿½");
     }
     
     

@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/LookingGlass.iml" filepath="$PROJECT_DIR$/.idea/LookingGlass.iml" />
+      <module fileurl="file://$PROJECT_DIR$/git_LookingGlass.iml" filepath="$PROJECT_DIR$/git_LookingGlass.iml" />
     </modules>
   </component>
 </project>
