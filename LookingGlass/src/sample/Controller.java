@@ -98,10 +98,10 @@ public class Controller implements Initializable{
             addTask.getChildren().add(mask);
             
             //getting the controller from main.fxml
-            AppointCont controller = (AppointCont) loader.getController();
+            appointCont = (AppointCont) loader.getController();
             
             // pass the mainController to the AppointmentController 
-            controller.init(this);
+            appointCont.init(this);
         }
         catch(IOException e) {
             e.printStackTrace();
@@ -399,18 +399,16 @@ public class Controller implements Initializable{
     		System.out.println("weather history is currently not supported\n");
     		diff=0;
     	}
+    	int weather[][] = Weather.getWeather(diff);
     	
 		weather1.setImage(Weather.getIcon(diff));
-		int weather[] = Weather.getWeather(diff);
-		label1.setText(String.valueOf(weather[1]) + "°/" + String.valueOf(weather[0]) + "°");
+		label1.setText(String.valueOf(weather[0][1]) + "°/" + String.valueOf(weather[0][0]) + "°");
 	
 		weather2.setImage(Weather.getIcon(diff+1));
-		weather = Weather.getWeather(diff+1);
-		label2.setText(String.valueOf(weather[1]) + "°/" + String.valueOf(weather[0]) + "°");
+		label2.setText(String.valueOf(weather[1][1]) + "°/" + String.valueOf(weather[1][0]) + "°");
 
 		weather3.setImage(Weather.getIcon(diff+2));
-		weather = Weather.getWeather(diff+2);
-		label3.setText(String.valueOf(weather[1]) + "°/" + String.valueOf(weather[0]) + "°");
+		label3.setText(String.valueOf(weather[2][1]) + "°/" + String.valueOf(weather[2][0]) + "°");
     }
     
     

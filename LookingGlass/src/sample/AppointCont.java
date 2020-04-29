@@ -24,6 +24,7 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 
@@ -33,7 +34,9 @@ import static sample.Main.date2;
 import static sample.Main.date3;
 
 public class AppointCont {
-  
+	
+	@FXML 
+	private AnchorPane AppointPane;
 	@FXML
     public Button closeButton;
 	@FXML
@@ -48,6 +51,9 @@ public class AppointCont {
     private CheckBox privacy;
     @FXML
     private Label message;
+    
+    private String action = "Create";
+    private int currentApptIndex;
     
 	private Controller mainController;
     /*
@@ -86,7 +92,12 @@ public class AppointCont {
         		int month = Integer.parseInt(dateArr[0]);
         		int year = Integer.parseInt(dateArr[2]);
         		
-        		cal.createAppointment(title + ":\n" + desc, startHour, startMin, endHour, endMin, day, month, year, privacy.isSelected());	
+        		if(this.action.equals("Create"))
+        			cal.createAppointment(title, desc, startHour, startMin, endHour, endMin, day, month, year, privacy.isSelected());	
+        		else if(this.action.equals("Edit")) {
+        			System.out.println("Debug" + currentApptIndex);
+        			cal.editAppointment(currentApptIndex, title, desc, startHour, startMin, endHour, endMin, day, month, year, privacy.isSelected());
+        		}
     		}
     		else
     		{
@@ -110,7 +121,6 @@ public class AppointCont {
     	//save calendar
     	Persistence.save(cal);
 
-        //call load method - bug for some reason it doesn't load. Have to use arrow buttons to refresh then it will load
         mainController.loadInfo(date1, date2, date3);
         // close window after creation
         Window window =   ((Node)(event.getSource())).getScene().getWindow(); 
@@ -119,6 +129,27 @@ public class AppointCont {
         }
         message.setText("");
     }
+    
+    public void handleEdit(int index, Appointment old_appt)
+    {
+    	this.action = "Edit";
+    	this.currentApptIndex = index;
+    	
+    	setStageTitle("Edit task...");
+    	
+    	appTitle.setText(old_appt.getTask());
+    	appDesc.setText(old_appt.getDesc());
+    	appDate.setText(old_appt.getDate());
+    	
+    	appt.setSelected(true);
+    	
+    	appStartTime.setText(convertTo12(old_appt.getStartHour() + ":" + old_appt.getStartMinute()));
+    	appEndTime.setText(convertTo12(old_appt.getEndHour() + ":" + old_appt.getEndMinute()));
+    	
+    	privacy.setSelected(old_appt.isPrivate());
+    }
+    
+    
     /*
      * @purpose - convert input time to military for easy collision detection
      * @param - Time input "9:00 AM"
@@ -167,5 +198,10 @@ public class AppointCont {
 	public void init(Controller mainController)
 	{
 		this.mainController = mainController;
+	}
+	
+	public void setStageTitle(String title){
+		Stage stage = (Stage) AppointPane.getScene().getWindow();
+		stage.setTitle(title);
 	}
 }

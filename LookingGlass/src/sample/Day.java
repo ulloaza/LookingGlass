@@ -50,23 +50,25 @@ public class Day implements Serializable {
 	public void removeAppointment(int index) {
 		appointmentList.remove(index);
 	}
+	
+	public Appointment getAppointment(int index) {
+		return appointmentList.get(index);
+	}
 		
 	/*
 	 * @purpose - edit an appt from the arraylist
 	 * @param - String task, String newTask
 	 */
-	public void editAppointment(Appointment appt, String newTask, int newStartHour, int newStartMinute, int newEndHour, int newEndMinute) {
-		for(int i = 0;i<appointmentList.size();i++) {
-			Appointment temp = appointmentList.get(i);
-			if(appt.equals(temp)) {
-				temp.setTask(newTask);
-				temp.setStartHour(newStartHour);
-				temp.setStartMinute(newStartMinute);
-				temp.setEndHour(newEndHour);
-				temp.setEndMinute(newEndMinute);
-				return;
-			}
-		}
+	public void editAppointment(int oldIndex, String newTask, String newDesc, int newStartHour, int newStartMinute, int newEndHour, int newEndMinute, boolean privacy) {
+		Appointment old = getAppointment(oldIndex);
+	
+		old.setTask(newTask);
+		old.setDesc(newDesc);
+		old.setStartHour(newStartHour);
+		old.setStartMinute(newStartMinute);
+		old.setEndHour(newEndHour);
+		old.setEndMinute(newEndMinute);
+		old.setPrivacy(privacy);
 	}
 	/*
 	 * @purpose - edit an note from the arraylist
