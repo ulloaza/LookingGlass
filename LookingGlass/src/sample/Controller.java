@@ -9,6 +9,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
@@ -394,39 +395,20 @@ public class Controller implements Initializable{
     // giving date1, load all remaining weathers
     public void loadWeathers(GregorianCalendar date) throws IOException
     {
-    	Date date1 = date.getTime();
-    			
-    	int diff=  (int) (date1.getTime()- new Date().getTime())/86400000;
-    	
-    	if(diff < 0 ) {
-    		System.out.println("weather history is currently not supported\n");
-    		diff=0;
-    	}
-    	int weather[][] = Weather.getWeather(diff);
-    	
-		weather1.setImage(Weather.getIcon(diff));
-<<<<<<< HEAD
-		int weather[] = Weather.getWeather(diff);
-		label1.setText(String.valueOf(weather[1]) + "ï¿½/" + String.valueOf(weather[0]) + "ï¿½");
-	
-		weather2.setImage(Weather.getIcon(diff+1));
-		weather = Weather.getWeather(diff+1);
-		label2.setText(String.valueOf(weather[1]) + "ï¿½/" + String.valueOf(weather[0]) + "ï¿½");
 
-		weather3.setImage(Weather.getIcon(diff+2));
-		weather = Weather.getWeather(diff+2);
-		label3.setText(String.valueOf(weather[1]) + "ï¿½/" + String.valueOf(weather[0]) + "ï¿½");
-=======
-		label1.setText(String.valueOf(weather[0][1]) + "°/" + String.valueOf(weather[0][0]) + "°");
-	
-		weather2.setImage(Weather.getIcon(diff+1));
-		label2.setText(String.valueOf(weather[1][1]) + "°/" + String.valueOf(weather[1][0]) + "°");
+        	int weather[][] = Weather.getWeather(date);
+        	Image icons[] = Weather.getIcon(date);
+        	
+    		weather1.setImage(icons[0]);
+    		label1.setText(weather[0][1] + "Â°/" + weather[0][0] + "Â°");
+    	
+    		weather2.setImage(icons[1]);
+    		label2.setText(weather[1][1] + "Â°/" + weather[1][0] + "Â°");
 
-		weather3.setImage(Weather.getIcon(diff+2));
-		label3.setText(String.valueOf(weather[2][1]) + "°/" + String.valueOf(weather[2][0]) + "°");
->>>>>>> eba8767c24123b090b57d61cecf691b98f2ffffe
-    }
-    
+    		weather3.setImage(icons[2]);
+    		label3.setText(weather[2][1] + "Â°/" + weather[2][0] + "Â°");
+    		System.out.println(weather[0][1] + "Â°/" + weather[0][0] + "Â°");
+        }
     
     public void loadLoginStatus() {
 		if(cal.getUser() == null)
