@@ -15,7 +15,7 @@
         <AnchorPane fx:id="top1" minHeight="0.0" minWidth="0.0" prefHeight="314.0" prefWidth="256.0">
           <children>
             <ImageView fx:id="weather1" fitHeight="71.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true" />
-            <Label fx:id="label1" layoutX="87.0" layoutY="11.0" prefHeight="50.0" prefWidth="84.0">
+            <Label fx:id="label1" layoutX="87.0" layoutY="11.0" prefHeight="50.0" prefWidth="150.0">
               <font>
                 <Font size="24.0" fx:id="x2" />
               </font>
@@ -76,7 +76,7 @@
       <items>
         <AnchorPane fx:id="top2" minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
           <children>
-            <Label fx:id="label2" font="$x2" layoutX="87.0" layoutY="11.0" prefHeight="50.0" prefWidth="84.0" />
+            <Label fx:id="label2" font="$x2" layoutX="87.0" layoutY="11.0" prefHeight="50.0" prefWidth="150.0" />
             <ImageView fx:id="weather2" fitHeight="71.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true" />
             <VBox id="tcontent2" layoutX="0.0" layoutY="76.0" prefHeight="157.0" prefWidth="256.0">
                      <children>
@@ -100,7 +100,7 @@
       <items>
         <AnchorPane fx:id="top3" minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
           <children>
-            <Label fx:id="label3" font="$x2" layoutX="86.0" layoutY="14.0" prefHeight="50.0" prefWidth="84.0" />
+            <Label fx:id="label3" font="$x2" layoutX="86.0" layoutY="14.0" prefHeight="50.0" prefWidth="150.0" />
             <ImageView fx:id="weather3" fitHeight="71.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true" />
             <VBox id="tcontent3" layoutX="0.0" layoutY="76.0" prefHeight="157.0" prefWidth="256.0">
                      <children>

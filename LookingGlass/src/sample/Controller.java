@@ -100,6 +100,7 @@ public class Controller implements Initializable{
             
             // pass the mainController to the AppointmentController 
             appointCont.initMainController(this);
+            appointCont.initView();
         }
         catch(IOException e) {
             e.printStackTrace();
@@ -514,8 +515,6 @@ public class Controller implements Initializable{
 
     		weather3.setImage(icons[2]);
     		label3.setText(weather[2][1] + "°/" + weather[2][0] + "°");
-    		
-    		System.out.println(weather[1][1] + "°/" + weather[1][0] + "°");
     
     }
     
