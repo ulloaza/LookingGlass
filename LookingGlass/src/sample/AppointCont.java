@@ -8,6 +8,7 @@ package sample;
  */
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -15,14 +16,11 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
+
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
@@ -53,9 +51,9 @@ public class AppointCont {
 	@FXML
     private TextField appTitle;
 	@FXML
-	private ListView userSchedule;
+	private ListView<Serializable> userSchedule;
 	@FXML
-	private ComboBox appStartTime, appEndTime, inviteBox;
+	private ComboBox<String> appStartTime, appEndTime, inviteBox;
 	@FXML 
 	private DatePicker appDate;
     @FXML

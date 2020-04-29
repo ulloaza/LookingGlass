@@ -1,6 +1,8 @@
 package sample;
 
-import javafx.collections.ObservableList;
+import java.io.*;
+import java.net.URL;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,20 +14,17 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextFlow;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Pair;
+
 import static sample.Main.cal;
 import static sample.Main.date1;
 import static sample.Main.date2;
 import static sample.Main.date3;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.GregorianCalendar;
-import java.io.*;
-import java.net.URL;
+
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -307,7 +306,7 @@ public class Controller implements Initializable{
         alert.showAndWait();
     }
     
-    public void handleApptEdit(GregorianCalendar date, ListView listview) {
+    public void handleApptEdit(GregorianCalendar date, ListView<Serializable> listview) {
     	int index = listview.getSelectionModel().getSelectedIndex(); 
         handleAddNewTask(new ActionEvent());
         
@@ -316,7 +315,7 @@ public class Controller implements Initializable{
         loadInfo(date1, date2, date3);
     }
     
-    public void handleApptDelete(GregorianCalendar date, ListView listview) {
+    public void handleApptDelete(GregorianCalendar date, ListView<Serializable> listview) {
     	int index = listview.getSelectionModel().getSelectedIndex(); 
         cal.deleteAppointment(index, date.get(date.DATE), date.get(date.MONTH) + 1, date.get(date.YEAR));
         
@@ -324,7 +323,7 @@ public class Controller implements Initializable{
         loadInfo(date1, date2, date3);
     }
     
-    public void handleNoteEdit(GregorianCalendar date, ListView listview) {
+    public void handleNoteEdit(GregorianCalendar date, ListView<Serializable> listview) {
     	int index = listview.getSelectionModel().getSelectedIndex();
     	handleAddNewTask(new ActionEvent());
         
@@ -335,7 +334,7 @@ public class Controller implements Initializable{
         loadInfo(date1, date2, date3);
     }
     
-    public void handleNoteDelete(GregorianCalendar date, ListView listview) {
+    public void handleNoteDelete(GregorianCalendar date, ListView<Serializable> listview) {
     	int index = listview.getSelectionModel().getSelectedIndex();
     	cal.deleteNote(index, date.get(date.DATE), date.get(date.MONTH) + 1, date.get(date.YEAR));
 
