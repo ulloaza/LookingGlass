@@ -11,7 +11,10 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
+
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,6 +22,8 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
@@ -38,9 +43,13 @@ public class AppointCont {
 	@FXML 
 	private AnchorPane AppointPane;
 	@FXML
-    public Button closeButton;
+    public Button closeButton, createButton;
 	@FXML
-    private TextField appTitle, appDate, appStartTime, appEndTime;
+    private TextField appTitle;
+	@FXML
+	private ComboBox appStartTime, appEndTime, inviteBox;
+	@FXML 
+	private DatePicker appDate;
     @FXML
     private TextArea appDesc;
     @FXML
@@ -73,9 +82,13 @@ public class AppointCont {
     	
     	String title = appTitle.getText();
     	String desc = appDesc.getText();
-    	String date = appDate.getText();
-    	String start = appStartTime.getText();
-    	String end = appEndTime.getText();
+    	
+    	LocalDate localDate = appDate.getValue();
+    	String date = localDate.getMonthValue()+"/"+localDate.getDayOfMonth()+"/"+localDate.getYear();
+
+    	String start = (String) appStartTime.getValue();
+    	String end = (String) appEndTime.getValue();
+    	System.out.println(date + " " + start + " " + end);
         	
     	if(toggleGroup.getSelectedToggle() == appt) {
     		
@@ -137,6 +150,34 @@ public class AppointCont {
             ((Stage) window).close();
         }
         message.setText("");
+        createButton.setText("Create");
+    }
+    
+    public void switchToAppointment()  {
+		todo.setSelected(false);
+		privacy.setSelected(false);
+		
+		appStartTime.setDisable(false);
+		appEndTime.setDisable(false);
+		inviteBox.setDisable(false);
+		appt.setDisable(false);
+    }
+    
+    public void switchToNote()  {
+		todo.setSelected(true);
+		privacy.setSelected(true);
+		
+		appStartTime.setDisable(true);
+		appEndTime.setDisable(true);
+		inviteBox.setDisable(true);
+    }
+    
+    public void handleSwitchToNote(ActionEvent event) throws IOException {
+    	switchToNote();
+    }
+    
+    public void handleSwitchToAppointment(ActionEvent event) throws IOException {
+    	switchToAppointment();
     }
     
     public void handleEdit(int index, Appointment old_appt, String type)
@@ -148,19 +189,28 @@ public class AppointCont {
     	
     	appTitle.setText(old_appt.getTask());
     	appDesc.setText(old_appt.getDesc());
-    	appDate.setText(old_appt.getDate());
+    	appDate.setValue(old_appt.getLocalDate());
     	
     	if(type.equals("Appt")) {
-    		appt.setSelected(true);
+    		switchToAppointment();
+    		todo.setDisable(true);
         	
-        	appStartTime.setText(convertTo12(old_appt.getStartHour() + ":" + old_appt.getStartMinute()));
-        	appEndTime.setText(convertTo12(old_appt.getEndHour() + ":" + old_appt.getEndMinute()));
+        	appStartTime.setValue(convertTo12(old_appt.getStartHour() + ":" + old_appt.getStartMinute()));
+        	appEndTime.setValue(convertTo12(old_appt.getEndHour() + ":" + old_appt.getEndMinute()));
     	}
-    	else if(type.equals("Note"))
-    		todo.setSelected(true);
+    	else if(type.equals("Note")) {
+    		switchToNote();
+    		appt.setDisable(true);
+    	}
     	
-
+    	createButton.setText("Save");
     	privacy.setSelected(old_appt.isPrivate());
+    }
+    
+    public void initView() {
+    	String timeOptions [] = {"12:00 AM", "12:30 AM","1:00 AM", "1:30 AM", "2:00 AM", "2:30 AM", "3:00 AM", "3:30 AM", "4:00 AM", "4:30 AM", "5:00 AM", "5:30 AM", "6:00 AM", "6:30 AM", "7:00 AM", "7:30 AM", "8:00 AM", "8:30 AM", "9:00 AM", "9:30 AM", "10:00 AM", "10:30 AM", "11:00 AM", "11:30 AM", "12:00 PM", "12:30 PM", "1:00 PM", "1:30 PM", "2:00 PM", "2:30 PM", "3:00 PM", "3:30 PM", "4:00 PM", "4:30 PM", "5:00 PM", "5:30 PM", "6:00 PM", "6:30 PM", "7:00 PM", "7:30 PM", "8:00 PM", "8:30 PM", "9:00 PM", "9:30 PM", "10:00 PM", "10:30 PM", "11:00 PM", "11:30 PM", "12:00 PM", "12:30 PM"};
+    	appStartTime.setItems(FXCollections.observableArrayList(timeOptions));
+    	appEndTime.setItems(FXCollections.observableArrayList(timeOptions));
     }
     
     

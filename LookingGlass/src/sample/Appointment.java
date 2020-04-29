@@ -2,6 +2,8 @@ package sample;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 /*
  * "Looking Glass" - Class Appointment
@@ -214,8 +216,9 @@ public class Appointment implements Serializable {
 	}
 	
 	// return the date(mm/dd/yyyy) as string
-	public String getDate() {
-		return this.month+"/"+this.day+"/"+this.year;
+	public LocalDate getLocalDate() {
+		
+		return LocalDate.of(this.year, this.month, this.day);
 	}
 	
 

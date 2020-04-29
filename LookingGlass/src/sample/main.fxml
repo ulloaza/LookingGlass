@@ -8,14 +8,14 @@
 <?import javafx.scene.text.*?>
 <?scenebuilder-classpath-element ../../../json-20190722.jar?>
 
-<AnchorPane fx:id="anchor" opacity="1.0" prefHeight="800.0" prefWidth="1300.0" visible="true" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="sample.Controller">
+<AnchorPane fx:id="anchor" opacity="1.0" prefHeight="800.0" prefWidth="1300.0" visible="true" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
   <children>
-    <SplitPane fx:id="split1" dividerPositions="0.6507592190889371" focusTraversable="true" layoutX="180.0" layoutY="139.0" orientation="VERTICAL" prefHeight="463.0" prefWidth="258.0">
+    <SplitPane fx:id="split1" dividerPositions="0.65" focusTraversable="true" layoutX="180.0" layoutY="139.0" orientation="VERTICAL" prefHeight="463.0" prefWidth="258.0">
       <items>
         <AnchorPane fx:id="top1" minHeight="0.0" minWidth="0.0" prefHeight="314.0" prefWidth="256.0">
           <children>
             <ImageView fx:id="weather1" fitHeight="71.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true" />
-            <Label fx:id="label1" layoutX="81.0" layoutY="0.0" prefHeight="71.0" prefWidth="121.0">
+            <Label fx:id="label1" layoutX="87.0" layoutY="11.0" prefHeight="50.0" prefWidth="150.0">
               <font>
                 <Font size="24.0" fx:id="x2" />
               </font>
@@ -100,7 +100,7 @@
       <items>
         <AnchorPane fx:id="top3" minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
           <children>
-            <Label fx:id="label3" font="$x2" layoutX="70.0" layoutY="1.0" prefHeight="72.0" prefWidth="121.0" />
+            <Label fx:id="label3" font="$x2" layoutX="86.0" layoutY="14.0" prefHeight="50.0" prefWidth="150.0" />
             <ImageView fx:id="weather3" fitHeight="71.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true" />
             <VBox id="tcontent3" layoutX="0.0" layoutY="76.0" prefHeight="157.0" prefWidth="256.0">
               <children>
