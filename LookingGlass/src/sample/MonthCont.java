@@ -59,8 +59,10 @@ public class MonthCont {
 //    }; 
 	
 	// load appts and notes for Month View
-	public void loadInfo(LocalDate date)
+	public void refresh()
 	{
+		LocalDate date = datePicker.getValue();
+		
     	appointmentList.getItems().clear();
     	todoList.getItems().clear();
     	
@@ -89,13 +91,13 @@ public class MonthCont {
 		        public void handle(ActionEvent e) 
 		        { 
 		        	LocalDate date = datePicker.getValue();
-		        	loadInfo(date);
+		        	refresh();
 		        } 
 		    }); 
 		 calendarBox.getChildren().add(datePickerSkin.getPopupContent());	
 	    
 		 // load today's appts and todos
-	    loadInfo(LocalDate.now());
+	    refresh();
 		 
 		// Initialize context-menu for appointmentList and todoList
 	    
@@ -109,8 +111,10 @@ public class MonthCont {
             mainController.handleAddNewTask(new ActionEvent());
             
             Appointment selectedAppt = cal.getAppointment(index, date.getDayOfMonth(), date.getMonthValue(), date.getYear());
-            mainController.appointCont.handleEdit(index, selectedAppt);
-            loadInfo(date);
+            
+            mainController.appointCont.initMonthController(this);
+            mainController.appointCont.handleEdit(index, selectedAppt, "Appt");
+            refresh();
         });
 	    MenuItem deleteAppt = new MenuItem("Delete");
 	    
@@ -123,7 +127,7 @@ public class MonthCont {
             
             // save new change then refresh
             Persistence.save(cal);
-            loadInfo(date);
+            refresh();
             mainController.loadInfo(date1, date2, date3);
         });
 	    
@@ -134,8 +138,19 @@ public class MonthCont {
 	    
 	    // code for edit notes
 	    editNote.setOnAction(event -> {
-            System.out.println("Edit Note");
+	    	LocalDate date = datePicker.getValue();
+	    	int index = todoList.getSelectionModel().getSelectedIndex();
+	    	
+	    	mainController.handleAddNewTask(new ActionEvent());
+            
+            String[] stringArr = todoList.getSelectionModel().getSelectedItem().toString().split(":");
+            Appointment noteAsAppt = new Appointment(stringArr[0], stringArr[1], date.getDayOfMonth(), date.getMonthValue(), date.getYear());
+            
+            mainController.appointCont.initMonthController(this);
+            mainController.appointCont.handleEdit(index, noteAsAppt, "Note");
+            refresh();
         });
+	    
 	    MenuItem deleteNote = new MenuItem("Delete");
 	    
 	    // code for delete notes
@@ -146,7 +161,7 @@ public class MonthCont {
             System.out.println("Delete Notes " + todoList.getSelectionModel().getSelectedItem() + "index "+ index); 
 
             Persistence.save(cal);
-            loadInfo(date);
+            refresh();
             mainController.loadInfo(date1, date2, date3);
         });
 	    
@@ -155,11 +170,16 @@ public class MonthCont {
 	    appointmentList.setContextMenu(apptMenu);
 	    todoList.setContextMenu(noteMenu);   
     }
+    
+    public LocalDate getSelectedDate()
+    {
+    	return datePicker.getValue();
+    }
 
     public void handleAddNewTask(ActionEvent event) {
 
     	mainController.handleAddNewTask(new ActionEvent());
-    	loadInfo(datePicker.getValue());
+    	refresh();
     }
     
 	public void init(Controller mainController)

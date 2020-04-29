@@ -37,7 +37,7 @@ public class Controller implements Initializable{
     @FXML
     Label label1, label2, label3, day1, day2, day3, username;
     @FXML
-    TextFlow textflow1, textflow2, textflow3, task1, task2, task3;
+    ListView<Serializable> listview1, listview2, listview3, task1, task2, task3;
     @FXML
     VBox tcontent1, bcontent1, tcontent2, bcontent2, tcontent3, bcontent3;
     @FXML
@@ -99,7 +99,7 @@ public class Controller implements Initializable{
             appointCont = (AppointCont) loader.getController();
             
             // pass the mainController to the AppointmentController 
-            appointCont.init(this);
+            appointCont.initMainController(this);
         }
         catch(IOException e) {
             e.printStackTrace();
@@ -256,17 +256,19 @@ public class Controller implements Initializable{
         });
     }
 
-    /*public void deleteTask(ActionEvent event) {
-
+    public void deleteTask(ActionEvent event) {
+    	handleMonthView(new ActionEvent());
     }
 
-    public void findNextFree(ActionEvent event) {
-    // Find the user's next available block of free time between 8 AM - 8 PM
-    }
+//    public void findNextFree(ActionEvent event) {
+//    // Find the user's next available block of free time between 8 AM - 8 PM
+//    }
+//
+//    public void findUsersFree(ActionEvent event) {
+//    // Find next free time between multiple users
+//    }
+    
 
-    public void findUsersFree(ActionEvent event) {
-    // Find next free time between multiple users
-    }*/
 
     public void helpInfo(ActionEvent event) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -303,21 +305,58 @@ public class Controller implements Initializable{
 
         alert.showAndWait();
     }
+    
+    public void handleApptEdit(GregorianCalendar date, ListView listview) {
+    	int index = listview.getSelectionModel().getSelectedIndex(); 
+        handleAddNewTask(new ActionEvent());
+        
+        Appointment selectedAppt = cal.getAppointment(index, date.get(date.DATE), date.get(date.MONTH) + 1, date.get(date.YEAR));
+        appointCont.handleEdit(index, selectedAppt, "Appt");
+        loadInfo(date1, date2, date3);
+    }
+    
+    public void handleApptDelete(GregorianCalendar date, ListView listview) {
+    	int index = listview.getSelectionModel().getSelectedIndex(); 
+        cal.deleteAppointment(index, date.get(date.DATE), date.get(date.MONTH) + 1, date.get(date.YEAR));
+        
+        Persistence.save(cal);
+        loadInfo(date1, date2, date3);
+    }
+    
+    public void handleNoteEdit(GregorianCalendar date, ListView listview) {
+    	int index = listview.getSelectionModel().getSelectedIndex();
+    	handleAddNewTask(new ActionEvent());
+        
+        String[] stringArr = listview.getSelectionModel().getSelectedItem().toString().split(":");
+        Appointment noteAsAppt = new Appointment(stringArr[0], stringArr[1], date.get(date.DATE), date.get(date.MONTH) + 1, date.get(date.YEAR));
+        
+        appointCont.handleEdit(index, noteAsAppt, "Note");
+        loadInfo(date1, date2, date3);
+    }
+    
+    public void handleNoteDelete(GregorianCalendar date, ListView listview) {
+    	int index = listview.getSelectionModel().getSelectedIndex();
+    	cal.deleteNote(index, date.get(date.DATE), date.get(date.MONTH) + 1, date.get(date.YEAR));
+
+        Persistence.save(cal);
+        loadInfo(date1, date2, date3);
+    }
   
-    public void loadInfo(GregorianCalendar date1, GregorianCalendar date2, GregorianCalendar date3) {
-        tcontent1.setVgrow(textflow1, Priority.ALWAYS);
-        tcontent2.setVgrow(textflow2, Priority.ALWAYS);
-        tcontent3.setVgrow(textflow3, Priority.ALWAYS);
+    @SuppressWarnings("static-access")
+	public void loadInfo(GregorianCalendar date1, GregorianCalendar date2, GregorianCalendar date3) {
+        tcontent1.setVgrow(listview1, Priority.ALWAYS);
+        tcontent2.setVgrow(listview2, Priority.ALWAYS);
+        tcontent3.setVgrow(listview3, Priority.ALWAYS);
         bcontent1.setVgrow(task1, Priority.ALWAYS);
         bcontent2.setVgrow(task2, Priority.ALWAYS);
         bcontent3.setVgrow(task3, Priority.ALWAYS);
 
-    	textflow1.getChildren().clear();
-    	textflow2.getChildren().clear();
-    	textflow3.getChildren().clear();
-    	task1.getChildren().clear();
-    	task2.getChildren().clear();
-    	task3.getChildren().clear();
+    	listview1.getItems().clear();
+    	listview2.getItems().clear();
+    	listview3.getItems().clear();
+    	task1.getItems().clear();
+    	task2.getItems().clear();
+    	task3.getItems().clear();
     	
     	loadLoginStatus();
 
@@ -331,65 +370,133 @@ public class Controller implements Initializable{
 		
     	//getting the appointments for the specified  date
 		ArrayList<Appointment> appts = cal.getAppointmentsSpecifiedDate(date1.get(date1.DATE), date1.get(date1.MONTH) + 1, date1.get(date1.YEAR));
-
-		//check if list is empty
-		if(!appts.isEmpty()) {
-			for(Appointment appt : appts) { 
-				Text text = new Text(appt.toString() + "\n\n");
-				
-				textflow1.getChildren().add(text);
-			}
-		}
 		ArrayList<String> notes = cal.getNotesSpecifiedDate(date1.get(date1.DATE), date1.get(date1.MONTH) + 1, date1.get(date1.YEAR));
-		if(!notes.isEmpty()) {
-			for(String note : notes) {
-				Text text = new Text(note + "\n\n");
-				
-				ObservableList list = task1.getChildren(); 
-				list.addAll(text);
-				
-			}
-		}
 		
+		listview1.getItems().addAll(appts);
+		task1.getItems().addAll(notes);
 		
 		appts = cal.getAppointmentsSpecifiedDate(date2.get(date2.DATE), date2.get(date2.MONTH) + 1, date2.get(date2.YEAR));
-		if(!appts.isEmpty()) {
-			for(Appointment appt : appts) { 
-				Text text = new Text(appt.toString() + "\n\n");
-				
-				ObservableList list = textflow2.getChildren(); 
-				list.addAll(text);
-			}
-		}
 		notes = cal.getNotesSpecifiedDate(date2.get(date2.DATE), date2.get(date2.MONTH) + 1, date2.get(date2.YEAR));
-		if(!notes.isEmpty()) {
-			for(String note : notes) {
-				Text text = new Text(note + "\n\n");
-				
-				ObservableList list = task2.getChildren(); 
-				list.addAll(text);
-				
-			}
-		}
+		
+		listview2.getItems().addAll(appts);
+		task2.getItems().addAll(notes);
+
 		appts = cal.getAppointmentsSpecifiedDate(date3.get(date3.DATE), date1.get(date3.MONTH) + 1, date3.get(date3.YEAR));
-		if(!appts.isEmpty()) {
-			for(Appointment appt : appts) { 
-				Text text = new Text(appt.toString() + "\n\n");
-				
-				ObservableList list = textflow3.getChildren(); 
-				list.addAll(text);
-			}
-		}
 		notes = cal.getNotesSpecifiedDate(date3.get(date3.DATE), date3.get(date3.MONTH) + 1, date3.get(date3.YEAR));
-		if(!notes.isEmpty()) {
-			for(String note : notes) {
-				Text text = new Text(note + "\n\n");
-				
-				ObservableList list = task3.getChildren(); 
-				list.addAll(text);
-				
-			}
-		}
+		
+		listview3.getItems().addAll(appts);
+		task3.getItems().addAll(notes);
+		
+		// Context Menu for SplitPane 1
+		
+		ContextMenu apptMenu1 = new ContextMenu();
+	    MenuItem editAppt1 = new MenuItem("Edit");
+	    
+	    // code for edit appointments
+	    editAppt1.setOnAction(event -> {
+	    	handleApptEdit(date1, listview1);
+        });
+	    MenuItem deleteAppt1 = new MenuItem("Delete");
+	    
+	    // code for delete appointments
+	    deleteAppt1.setOnAction(event -> {
+	    	handleApptDelete(date1, listview1);
+        });
+	    
+	    apptMenu1.getItems().addAll(editAppt1, deleteAppt1);
+	    
+	    ContextMenu noteMenu1 = new ContextMenu();
+	    MenuItem editNote1 = new MenuItem("Edit");
+	    
+	    // code for edit notes
+	    editNote1.setOnAction(event -> {
+	    	handleNoteEdit(date1, task1);
+        });
+	    MenuItem deleteNote1 = new MenuItem("Delete");
+	    
+	    // code for delete notes
+	    deleteNote1.setOnAction(event -> {
+	    	handleNoteDelete(date1, task1);
+        });
+	    
+	    noteMenu1.getItems().addAll(editNote1, deleteNote1);
+	    
+	    listview1.setContextMenu(apptMenu1);
+	    task1.setContextMenu(noteMenu1);   
+	    
+	 // Context Menu for SplitPane 2
+		
+	 		ContextMenu apptMenu2 = new ContextMenu();
+	 	    MenuItem editAppt2 = new MenuItem("Edit");
+	 	    
+	 	    // code for edit appointments
+	 	    editAppt2.setOnAction(event -> {
+	 	    	handleApptEdit(date2, listview2);
+	         });
+	 	    MenuItem deleteAppt2 = new MenuItem("Delete");
+	 	    
+	 	    // code for delete appointments
+	 	    deleteAppt2.setOnAction(event -> {
+	 	    	handleApptDelete(date2, listview2);
+	         });
+	 	    
+	 	    apptMenu2.getItems().addAll(editAppt2, deleteAppt2);
+	 	    
+	 	    ContextMenu noteMenu2 = new ContextMenu();
+	 	    MenuItem editNote2 = new MenuItem("Edit");
+	 	    
+	 	    // code for edit notes
+	 	    editNote2.setOnAction(event -> {
+	 	    	handleNoteEdit(date2, task2);
+	         });
+	 	    MenuItem deleteNote2 = new MenuItem("Delete");
+	 	    
+	 	    // code for delete notes
+	 	    deleteNote2.setOnAction(event -> {
+	 	    	handleNoteDelete(date2, task2);
+	         });
+	 	    
+	 	    noteMenu2.getItems().addAll(editNote2, deleteNote2);
+	 	    
+	 	    listview2.setContextMenu(apptMenu2);
+	 	    task2.setContextMenu(noteMenu2);  
+	 	    
+	 	// Context Menu for SplitPane 3
+			
+			ContextMenu apptMenu3 = new ContextMenu();
+		    MenuItem editAppt3 = new MenuItem("Edit");
+		    
+		    // code for edit appointments
+		    editAppt3.setOnAction(event -> {
+		    	handleApptEdit(date3, listview3);
+	        });
+		    MenuItem deleteAppt3 = new MenuItem("Delete");
+		    
+		    // code for delete appointments
+		    deleteAppt3.setOnAction(event -> {
+		    	handleApptDelete(date3, listview3);
+	        });
+		    
+		    apptMenu3.getItems().addAll(editAppt3, deleteAppt3);
+		    
+		    ContextMenu noteMenu3 = new ContextMenu();
+		    MenuItem editNote3 = new MenuItem("Edit");
+		    
+		    // code for edit notes
+		    editNote3.setOnAction(event -> {
+		    	handleNoteEdit(date3, task3);
+	        });
+		    MenuItem deleteNote3 = new MenuItem("Delete");
+		    
+		    // code for delete notes
+		    deleteNote3.setOnAction(event -> {
+		    	handleNoteDelete(date3, task3);
+	        });
+		    
+		    noteMenu3.getItems().addAll(editNote3, deleteNote3);
+		    
+		    listview3.setContextMenu(apptMenu3);
+		    task3.setContextMenu(noteMenu3);  
     }
     
     // giving date1, load all remaining weathers
@@ -407,8 +514,10 @@ public class Controller implements Initializable{
 
     		weather3.setImage(icons[2]);
     		label3.setText(weather[2][1] + "°/" + weather[2][0] + "°");
-    		System.out.println(weather[0][1] + "°/" + weather[0][0] + "°");
-        }
+    		
+    		System.out.println(weather[1][1] + "°/" + weather[1][0] + "°");
+    
+    }
     
     public void loadLoginStatus() {
 		if(cal.getUser() == null)

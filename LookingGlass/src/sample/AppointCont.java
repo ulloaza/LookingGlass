@@ -53,9 +53,11 @@ public class AppointCont {
     private Label message;
     
     private String action = "Create";
-    private int currentApptIndex;
+    
+    private int currentSelectedIndex;
     
 	private Controller mainController;
+	private MonthCont monthController;
     /*
      * @purpose button handler for closing event
      */
@@ -94,10 +96,9 @@ public class AppointCont {
         		
         		if(this.action.equals("Create"))
         			cal.createAppointment(title, desc, startHour, startMin, endHour, endMin, day, month, year, privacy.isSelected());	
-        		else if(this.action.equals("Edit")) {
-        			System.out.println("Debug" + currentApptIndex);
-        			cal.editAppointment(currentApptIndex, title, desc, startHour, startMin, endHour, endMin, day, month, year, privacy.isSelected());
-        		}
+        		else if(this.action.equals("Edit")) 
+        			cal.editAppointment(currentSelectedIndex, title, desc, startHour, startMin, endHour, endMin, day, month, year, privacy.isSelected());
+        		
     		}
     		else
     		{
@@ -114,7 +115,12 @@ public class AppointCont {
         		int month = Integer.parseInt(dateArr[0]);
         		int year = Integer.parseInt(dateArr[2]);
         		
-    			cal.createNote(title + ":\n" + desc, day, month, year);	
+        		if(this.action.equals("Create"))
+        			cal.createNote(title + ":\n" + desc, day, month, year);	
+        		else if(this.action.equals("Edit")) {
+        			System.out.println("Note edit");
+        			cal.editNote(this.currentSelectedIndex, title + ":\n" + desc, day, month, year);
+        		}
     		}
     	}
     	
@@ -122,6 +128,9 @@ public class AppointCont {
     	Persistence.save(cal);
 
         mainController.loadInfo(date1, date2, date3);
+        
+        if(monthController != null)	monthController.refresh();
+        
         // close window after creation
         Window window =   ((Node)(event.getSource())).getScene().getWindow(); 
         if (window instanceof Stage){
@@ -130,10 +139,10 @@ public class AppointCont {
         message.setText("");
     }
     
-    public void handleEdit(int index, Appointment old_appt)
+    public void handleEdit(int index, Appointment old_appt, String type)
     {
     	this.action = "Edit";
-    	this.currentApptIndex = index;
+    	this.currentSelectedIndex = index;
     	
     	setStageTitle("Edit task...");
     	
@@ -141,11 +150,16 @@ public class AppointCont {
     	appDesc.setText(old_appt.getDesc());
     	appDate.setText(old_appt.getDate());
     	
-    	appt.setSelected(true);
+    	if(type.equals("Appt")) {
+    		appt.setSelected(true);
+        	
+        	appStartTime.setText(convertTo12(old_appt.getStartHour() + ":" + old_appt.getStartMinute()));
+        	appEndTime.setText(convertTo12(old_appt.getEndHour() + ":" + old_appt.getEndMinute()));
+    	}
+    	else if(type.equals("Note"))
+    		todo.setSelected(true);
     	
-    	appStartTime.setText(convertTo12(old_appt.getStartHour() + ":" + old_appt.getStartMinute()));
-    	appEndTime.setText(convertTo12(old_appt.getEndHour() + ":" + old_appt.getEndMinute()));
-    	
+
     	privacy.setSelected(old_appt.isPrivate());
     }
     
@@ -195,11 +209,15 @@ public class AppointCont {
         return output;
     }
     
-	public void init(Controller mainController)
+	public void initMainController(Controller mainController)
 	{
 		this.mainController = mainController;
 	}
 	
+	public void initMonthController(MonthCont monthCont)
+	{
+		this.monthController = monthCont;
+	}
 	public void setStageTitle(String title){
 		Stage stage = (Stage) AppointPane.getScene().getWindow();
 		stage.setTitle(title);

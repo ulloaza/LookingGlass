@@ -181,15 +181,15 @@ public class MyCalendar implements Serializable {
 	 * @purpose edits note 
 	 * @param String note, int day, int month, int year, String newNote
 	 */
-	public void editNote(String note, int day, int month, int year, String newNote) {
+	public void editNote(int index, String note, int day, int month, int year) {
 		Day calDay = new Day(day, month, year);
-		int index = findDay(calDay);
-		if(index == -1) {
+		int i = findDay(calDay);
+		if(i == -1) {
 			return;
 		}
 		else {
-			calDay = dayList.get(index);
-			calDay.editNote(note, newNote);
+			calDay = dayList.get(i);
+			calDay.editNote(index, note);
 		}
 	}
 	/*

@@ -59,6 +59,17 @@ public class Appointment implements Serializable {
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 		this.id = ""+timestamp.getTime();
 	}
+	//  constructor for Note template
+	public Appointment(String task, String desc, int day, int month, int year) {
+
+		this.day = day;
+		this.month = month;
+		this.year = year;
+		
+		this.task = task;
+		this.desc = desc;
+		this.privacy = true;
+	}
 	/*
 	 * @purpose get task info
 	 * @returns task
@@ -198,6 +209,7 @@ public class Appointment implements Serializable {
 //		else {
 //			return false;
 //		}
+		// Avoid conflict by using their unique id
 		return this.id.equals(appt.id);
 	}
 	

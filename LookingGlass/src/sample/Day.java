@@ -54,6 +54,10 @@ public class Day implements Serializable {
 	public Appointment getAppointment(int index) {
 		return appointmentList.get(index);
 	}
+	
+	public String getNote(int index) {
+		return noteList.get(index);
+	}
 		
 	/*
 	 * @purpose - edit an appt from the arraylist
@@ -74,13 +78,9 @@ public class Day implements Serializable {
 	 * @purpose - edit an note from the arraylist
 	 * @param - String note, String newNote
 	 */
-	public void editNote(String note, String newNote) {
-		for(int i = 0;i<noteList.size();i++) {
-			if(note.equals(noteList.get(i))) {
-				noteList.set(i, newNote);
-				return;
-			}
-		}
+	public void editNote(int index, String note) {
+		String oldNote = getNote(index);
+		noteList.set(index, note);
 	}
 	/*
 	 * @purpose - remove an note from the arraylist
