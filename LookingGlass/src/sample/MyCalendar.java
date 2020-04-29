@@ -96,8 +96,8 @@ public class MyCalendar implements Serializable {
 	 * @purpose creates new appointment 
 	 * @param String task, String startTime, String endTime, int day, int month, int year
 	 */
-	public void createAppointment(String task, int startHour, int startMinute, int endHour, int endMinute, int day, int month, int year, boolean privacy) {
-		Appointment appt = new Appointment(task, startHour, startMinute, endHour, endMinute, day, month, year, privacy);
+	public void createAppointment(String task, String desc, int startHour, int startMinute, int endHour, int endMinute, int day, int month, int year, boolean privacy) {
+		Appointment appt = new Appointment(task, desc, startHour, startMinute, endHour, endMinute, day, month, year, privacy);
 		//check to see if there is a collision
 		if(isTimeTaken(appt)) {
 			return;
@@ -132,26 +132,49 @@ public class MyCalendar implements Serializable {
 				return;
 			}
 			
-			calDay.removeAppointment(index - 1);
+			calDay.removeAppointment(index);
 		}
 	}
+	
+	/*
+	 * @purpose - get an appointment from a specific time
+	 * 
+	 */
+	public Appointment getAppointment(int index, int day, int month, int year) {
+		Day calDay = new Day(day, month, year);
+		int i = findDay(calDay);
+		if(index == -1) {
+			return null;
+		}
+		else {
+			calDay = dayList.get(i);
+			//make sure index is not out of bounds
+			if(calDay.getAppointments().size() < index) {
+				return null;
+			}
+			
+			return calDay.getAppointment(index);
+		}
+	}
+	
 	
 	/*
 	 * @purpose edits  appointment 
 	 * @param String task, String startTime, String endTime, int day, int month, int year, String newTask
 	 */
-	public void editAppointment(int startHour, int startMinute, int endHour, int endMinute, int newStartHour, int newStartMinute, int newEndHour, int newEndMinute, String newTask, int day, int month, int year) {
+	public void editAppointment(int index, String task, String desc, int startHour, int startMinute, int endHour, int endMinute, int day, int month, int year, boolean privacy) {
 		Day calDay = new Day(day, month, year);
-		int index = findDay(calDay);
-		if(index == -1) {
+		int i = findDay(calDay);
+		if(i == -1) {
 			return;
 		}
 		else {
-			calDay = dayList.get(index);
-		//	Appointment tempAppt = new Appointment(startHour, startMinute, endHour, endMinute, day, month, year);
-			//calDay.removeAppointment(tempAppt);
-			//tempAppt = new Appointment(newTask, newStartHour, newStartMinute, newEndHour, newEndMinute, day, month, year);
-			//calDay.addAppointment(tempAppt);
+			calDay = dayList.get(i);
+			//make sure index is not out of bounds
+			if(calDay.getAppointments().size() < index) {
+				return;
+			}
+			calDay.editAppointment(index, task, desc, startHour, startMinute, endHour, endMinute, privacy);
 		}
 	}
 	/*
@@ -185,7 +208,7 @@ public class MyCalendar implements Serializable {
 			if(calDay.getNotes().size() < index) {
 				return;
 			}
-			calDay.removeNote(index - 1);
+			calDay.removeNote(index);
 		}
 	}
 	/*

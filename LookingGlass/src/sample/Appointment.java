@@ -1,6 +1,7 @@
 package sample;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 
 /*
  * "Looking Glass" - Class Appointment
@@ -13,12 +14,17 @@ public class Appointment implements Serializable {
 	
 	/*appointment content*/
 	private String task;
+	/*appointment description*/
+	private String desc;
 	/*time content*/
 	private int startHour, startMinute, endHour, endMinute;
 	/*privacty setting*/
 	private boolean privacy;	
 	/*appt date*/
 	private int day, month, year;
+	
+	// a unique timestamp for an appoint
+	private String id;
 
 	
 
@@ -26,8 +32,9 @@ public class Appointment implements Serializable {
 	 * @param - String task, String time, int day, int month, int year
 	 * 
 	 */
-	public Appointment(String task, int startHour, int startMinute, int endHour, int endMinute, int day, int month, int year, boolean privacy) {
+	public Appointment(String task, String desc, int startHour, int startMinute, int endHour, int endMinute, int day, int month, int year, boolean privacy) {
 		this.task = task;
+		this.desc = desc;
 		this.startHour = startHour;
 		this.startMinute = startMinute;
 		this.endHour = endHour;
@@ -36,6 +43,9 @@ public class Appointment implements Serializable {
 		this.month = month;
 		this.year = year;
 		this.privacy = privacy;
+		
+		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+		this.id = ""+timestamp.getTime();
 	}
 	public Appointment(int startHour, int startMinute, int endHour, int endMinute, int day, int month, int year) {
 		this.startHour = startHour;
@@ -45,6 +55,9 @@ public class Appointment implements Serializable {
 		this.day = day;
 		this.month = month;
 		this.year = year;
+		
+		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+		this.id = ""+timestamp.getTime();
 	}
 	/*
 	 * @purpose get task info
@@ -52,6 +65,15 @@ public class Appointment implements Serializable {
 	 */
 	public String getTask() {
 		return task;
+	}
+	
+	
+	/*
+	 * @purpose get task description
+	 * @returns desc
+	 */
+	public String getDesc() {
+		return desc;
 	}
 	/*
 	 * @purpose get time info
@@ -102,6 +124,10 @@ public class Appointment implements Serializable {
 	public int getYear() {
 		return year;
 	}
+	
+	public String getId() {
+		return this.id;
+	}
 	/*
 	 * @purpose - get privacy setting 
 	 * @returns privacy
@@ -116,11 +142,21 @@ public class Appointment implements Serializable {
 		this.privacy = privacy;
 	}
 	/*
+	 * @purpose - set task description
+	 */
+	public void setDesc(String desc) {
+		this.desc = desc;
+	}
+	
+	/*
 	 * @purpose - set task info 
 	 */
 	public void setTask(String task) {
 		this.task = task;
 	}
+	
+	
+	
 	/*
 	 * @purpose - set time info 
 	 */
@@ -146,20 +182,28 @@ public class Appointment implements Serializable {
 		String start = AppointCont.convertTo12(startHour + ":" + startMinute);
 		String end = AppointCont.convertTo12(endHour + ":" + endMinute);
 
-		return start + "-" + end + "--"  + task;
+		return start + "-" + end + " -- "  + task + "\n" + desc;
 	}
+	
+	
 	/*
 	 * @purpose - Compares appointment classes to check if the task is the same
 	 * @param - Appointment appt
 	 * @returns boolean
 	 */
 	public boolean equals(Appointment appt) {
-		if(this.startHour == appt.getStartHour() && this.startMinute == appt.getEndMinute()) {
-			return true;
-		}
-		else {
-			return false;
-		}
+//		if(this.startHour == appt.getStartHour() && this.startMinute == appt.getEndMinute()) {
+//			return true;
+//		}
+//		else {
+//			return false;
+//		}
+		return this.id.equals(appt.id);
+	}
+	
+	// return the date(mm/dd/yyyy) as string
+	public String getDate() {
+		return this.month+"/"+this.day+"/"+this.year;
 	}
 	
 
