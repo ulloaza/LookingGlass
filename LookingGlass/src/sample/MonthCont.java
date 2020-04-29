@@ -1,8 +1,6 @@
 package sample;
 
-import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -32,7 +30,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-import com.sun.javafx.scene.control.skin.DatePickerSkin;
+import javafx.scene.control.skin.DatePickerSkin;
 
 public class MonthCont {
     @FXML
@@ -42,22 +40,9 @@ public class MonthCont {
     
     @FXML
     private ListView<Serializable> appointmentList, todoList;
-    
 	private Controller mainController;
-	
 	private DatePicker datePicker;
-    
-//    SimpleCalendar calWidget = new SimpleCalendar();
-//    DatePicker calDateWidget = new DatePicker();
-    
-    
-//    EventHandler<ActionEvent> event = new EventHandler<ActionEvent>() { 
-//        public void handle(ActionEvent e) 
-//        { 
-//        	
-//        } 
-//    }; 
-	
+
 	// load appts and notes for Month View
 	public void refresh()
 	{

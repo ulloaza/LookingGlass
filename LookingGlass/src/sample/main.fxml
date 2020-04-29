@@ -10,7 +10,7 @@
 
 <AnchorPane fx:id="anchor" opacity="1.0" prefHeight="800.0" prefWidth="1300.0" visible="true" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
   <children>
-    <SplitPane fx:id="split1" dividerPositions="0.5010845986984815" focusTraversable="true" layoutX="180.0" layoutY="139.0" orientation="VERTICAL" prefHeight="463.0" prefWidth="258.0">
+    <SplitPane fx:id="split1" dividerPositions="0.65" focusTraversable="true" layoutX="180.0" layoutY="139.0" orientation="VERTICAL" prefHeight="463.0" prefWidth="258.0">
       <items>
         <AnchorPane fx:id="top1" minHeight="0.0" minWidth="0.0" prefHeight="314.0" prefWidth="256.0">
           <children>
@@ -20,19 +20,19 @@
                 <Font size="24.0" fx:id="x2" />
               </font>
             </Label>
-            <VBox fx:id="tcontent1" layoutX="0.0" layoutY="71.0" prefHeight="157.0" prefWidth="256.0">
-                     <children>
-                        <ListView fx:id="listview1" prefHeight="200.0" prefWidth="200.0" />
-                     </children>
+            <VBox fx:id="tcontent1" layoutX="0.0" layoutY="72.0" prefHeight="157.0" prefWidth="256.0">
+              <children>
+                <ListView fx:id="listview1" editable="true" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="256.0" VBox.vgrow="ALWAYS" />
+              </children>
             </VBox>
           </children>
         </AnchorPane>
         <AnchorPane fx:id="bottom1" minHeight="0.0" minWidth="0.0" prefHeight="129.0" prefWidth="256.0">
           <children>
             <VBox fx:id="bcontent1" layoutX="0.0" layoutY="0.0" prefHeight="227.0" prefWidth="256.0">
-                     <children>
-                        <ListView fx:id="task1" prefHeight="200.0" prefWidth="200.0" />
-                     </children>
+              <children>
+                <ListView fx:id="task1" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="256.0" VBox.vgrow="ALWAYS" />
+              </children>
             </VBox>
           </children>
         </AnchorPane>
@@ -72,49 +72,49 @@
     <Label alignment="CENTER" font="$x1" layoutX="738.0" layoutY="664.0" prefHeight="24.0" prefWidth="84.0" text="Month View" />
     <Button fx:id="arrowLeft" layoutX="68.0" layoutY="283.0" mnemonicParsing="false" onAction="#leftClick" prefHeight="167.0" prefWidth="68.0" />
     <Button fx:id="arrowRight" layoutX="1118.0" layoutY="283.0" mnemonicParsing="false" onAction="#rightClick" prefHeight="167.0" prefWidth="68.0" />
-    <SplitPane fx:id="split2" dividerPositions="0.5010845986984815" focusTraversable="true" layoutX="493.0" layoutY="139.0" orientation="VERTICAL" prefHeight="463.0" prefWidth="258.0">
+    <SplitPane fx:id="split2" dividerPositions="0.6507592190889371" focusTraversable="true" layoutX="493.0" layoutY="139.0" orientation="VERTICAL" prefHeight="463.0" prefWidth="258.0">
       <items>
         <AnchorPane fx:id="top2" minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
           <children>
-            <Label fx:id="label2" font="$x2" layoutX="87.0" layoutY="11.0" prefHeight="50.0" prefWidth="150.0" />
+            <Label fx:id="label2" font="$x2" layoutX="78.0" layoutY="0.0" prefHeight="71.00009999999747" prefWidth="121.0" />
             <ImageView fx:id="weather2" fitHeight="71.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true" />
             <VBox id="tcontent2" layoutX="0.0" layoutY="76.0" prefHeight="157.0" prefWidth="256.0">
-                     <children>
-                        <ListView fx:id="listview2" prefHeight="200.0" prefWidth="200.0" />
-                     </children>
+              <children>
+                <ListView fx:id="listview2" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="256.0" VBox.vgrow="ALWAYS" SplitPane.resizableWithParent="tcontent2" />
+              </children>
             </VBox>
           </children>
         </AnchorPane>
         <AnchorPane fx:id="bottom2" minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
           <children>
             <VBox fx:id="bcontent2" layoutX="0.0" layoutY="0.0" prefHeight="227.0" prefWidth="256.0">
-                     <children>
-                        <ListView fx:id="task2" prefHeight="200.0" prefWidth="200.0" />
-                     </children>
+              <children>
+                <ListView fx:id="task2" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="256.0" VBox.vgrow="ALWAYS" />
+              </children>
             </VBox>
           </children>
         </AnchorPane>
       </items>
     </SplitPane>
-    <SplitPane fx:id="split3" dividerPositions="0.5010845986984815" focusTraversable="true" layoutX="812.0" layoutY="139.0" orientation="VERTICAL" prefHeight="463.0" prefWidth="258.0">
+    <SplitPane fx:id="split3" dividerPositions="0.6507592190889371" focusTraversable="true" layoutX="812.0" layoutY="139.0" orientation="VERTICAL" prefHeight="463.0" prefWidth="258.0">
       <items>
         <AnchorPane fx:id="top3" minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
           <children>
             <Label fx:id="label3" font="$x2" layoutX="86.0" layoutY="14.0" prefHeight="50.0" prefWidth="150.0" />
             <ImageView fx:id="weather3" fitHeight="71.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true" />
             <VBox id="tcontent3" layoutX="0.0" layoutY="76.0" prefHeight="157.0" prefWidth="256.0">
-                     <children>
-                        <ListView fx:id="listview3" prefHeight="200.0" prefWidth="200.0" />
-                     </children>
+              <children>
+                <ListView fx:id="listview3" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="256.0" VBox.vgrow="ALWAYS" />
+              </children>
             </VBox>
           </children>
         </AnchorPane>
         <AnchorPane fx:id="bottom3" minHeight="0.0" minWidth="0.0" prefHeight="158.0" prefWidth="256.0">
           <children>
             <VBox fx:id="bcontent3" layoutX="0.0" layoutY="0.0" prefHeight="227.0" prefWidth="256.0">
-                     <children>
-                        <ListView fx:id="task3" prefHeight="200.0" prefWidth="200.0" />
-                     </children>
+              <children>
+                <ListView fx:id="task3" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="256.0" VBox.vgrow="ALWAYS" />
+              </children>
             </VBox>
           </children>
         </AnchorPane>
