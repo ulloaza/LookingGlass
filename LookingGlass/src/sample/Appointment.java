@@ -25,6 +25,7 @@ public class Appointment implements Serializable {
 	/*appt date*/
 	private int day, month, year;
 	
+	private String invitedMember;
 	// a unique timestamp for an appoint
 	private String id;
 
@@ -49,6 +50,7 @@ public class Appointment implements Serializable {
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 		this.id = ""+timestamp.getTime();
 	}
+		
 	public Appointment(int startHour, int startMinute, int endHour, int endMinute, int day, int month, int year) {
 		this.startHour = startHour;
 		this.startMinute = startMinute;
@@ -72,7 +74,45 @@ public class Appointment implements Serializable {
 		this.desc = desc;
 		this.privacy = true;
 	}
+	
+	//  Appointment with invitedPerson
+	public Appointment(String task, String desc, String invitedMember, int startHour, int startMinute, int endHour, int endMinute, int day, int month, int year, boolean privacy) {
+
+		this.day = day;
+		this.month = month;
+		this.year = year;
+		this.startHour = startHour;
+		this.startMinute = startMinute;
+		this.endHour = endHour;
+		this.endMinute = endMinute;
+		
+		this.invitedMember = invitedMember;
+		
+		this.task = task;
+		this.desc = desc;
+		this.privacy = privacy;
+		
+		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+		this.id = ""+timestamp.getTime();
+	}
+	
+	// free time template
+	public Appointment(int startHour, int startMinute, int endHour, int endMinute)
+	{
+		this.startHour = startHour;
+		this.startMinute = startMinute;
+		this.endHour = endHour;
+		this.endMinute = endMinute;
+		
+		this.task = "";
+		this.desc = "Free Time";
+	}
+	
+	
 	/*
+	 * 
+	 * 
+	 * 
 	 * @purpose get task info
 	 * @returns task
 	 */
@@ -88,6 +128,11 @@ public class Appointment implements Serializable {
 	public String getDesc() {
 		return desc;
 	}
+	
+	public String getInvitedMember() {
+		return this.invitedMember;
+	}
+	
 	/*
 	 * @purpose get time info
 	 * @returns starthour
@@ -168,6 +213,9 @@ public class Appointment implements Serializable {
 		this.task = task;
 	}
 	
+	public void setInvitedMember(String invite) {
+		this.invitedMember = invite;
+	}
 	
 	
 	/*

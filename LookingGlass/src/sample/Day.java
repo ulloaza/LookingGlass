@@ -96,6 +96,16 @@ public class Day implements Serializable {
 	public ArrayList<Appointment> getAppointments() {
 		return appointmentList;
 	}
+	
+	public ArrayList<Appointment> getPublicAppointments() {
+		ArrayList<Appointment> publicAppts = new ArrayList<Appointment>();
+		for (Appointment appt : this.appointmentList) {
+			if(appt.isPrivate() == false)
+				publicAppts.add(appt);
+		}
+		return publicAppts;
+	}
+	
 	/*
 	 * @purpose get notes
 	 * @returns - ArrayList notes

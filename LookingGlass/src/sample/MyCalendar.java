@@ -1,6 +1,7 @@
 package sample;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -27,7 +28,7 @@ public class MyCalendar implements Serializable {
 	 * @purpose - used to create invalid object and load another object into it
 	 */
 	public MyCalendar() {
-		
+		userList = Persistence.getAvailableUsers();
 	}
 	/* 
 	 * Constructor for MyCalender Class
@@ -37,6 +38,7 @@ public class MyCalendar implements Serializable {
 		this.user = user;
 		this.password = password;
 		addUser(user);
+		userList = Persistence.getAvailableUsers();
 	}
 	/*
 	 * @purpose - adds user to the userlist so we know how many/what users are available
@@ -114,6 +116,41 @@ public class MyCalendar implements Serializable {
 			calDay = dayList.get(index);
 			calDay.addAppointment(appt);
 		}
+	}
+	
+	public boolean createAppointmentWithInvite(String task, String desc, String invitedMember, int startHour, int startMinute, int endHour, int endMinute, int day, int month, int year, boolean privacy) {
+		Appointment appt = new Appointment(task, desc, invitedMember, startHour, startMinute, endHour, endMinute, day, month, year, privacy);
+		
+		MyCalendar userCal = Persistence.load(invitedMember);
+		//check to see if there is a collision
+		if(isTimeTaken(appt) || userCal.isTimeTaken(appt)) {
+			return false;
+		}
+		
+		Day calDay = new Day(day, month, year);
+		int index = findDay(calDay);
+		int userIndex = userCal.findDay(calDay);
+		
+		/*if day does not exists yet, then create new day obj*/
+		if(index == -1) {
+			calDay.addAppointment(appt);
+			addDay(calDay);
+		}
+		else if (userIndex == -1) {
+			calDay.addAppointment(appt);
+			userCal.addDay(calDay);
+		}
+		/*else add to existing day object*/
+		else {
+			calDay = dayList.get(index);
+			calDay.addAppointment(appt);
+			
+			calDay = userCal.dayList.get(userIndex);
+			calDay.addAppointment(appt);
+		}
+		
+		Persistence.save(userCal);
+		return true;
 	}
 	/*
 	 * @purpose - deletes an appointment from a specific day
@@ -321,6 +358,65 @@ public class MyCalendar implements Serializable {
 				return;
 			}	
 		}
+	}
+	
+	public ArrayList<Appointment> getPublicAppointmentsSpecifiedDate(int day, int month, int year) {
+		Day calDay = new Day(day, month, year);
+		Day tempDay = null;
+		for(int i = 0;i<dayList.size();i++) {
+			tempDay = dayList.get(i);
+			if(tempDay.equals(calDay)) {
+				return tempDay.getPublicAppointments();
+			}
+		}
+		return calDay.getPublicAppointments();
+	}
+	/*
+	 * @purpose get the all notes for specific day
+	 * @param int day, int month, int year
+	 * @returns array list of notes
+	 */
+
+	
+	public ArrayList<Appointment> getUserPublicSchedule(String username,  LocalDate date){
+		MyCalendar userCal = Persistence.load(username);
+		
+		if(userCal == null)
+			return null;
+		
+		ArrayList<Appointment> scheduleList =userCal.getPublicAppointmentsSpecifiedDate(date.getDayOfMonth(), date.getMonthValue(), date.getYear());
+
+		int size = scheduleList.size();
+		
+		if(size < 1)
+			return null;
+		
+		// add Free-Time slot
+		if(size > 1) {
+			for(int i = 0; i < size; i+=2) {
+				Appointment appt1 = scheduleList.get(i);
+				Appointment appt2 = scheduleList.get(i+1);
+				
+				if(appt1.getEndHour() == appt2.getStartHour() && appt2.getEndMinute() == appt2.getEndMinute())
+					continue;
+				
+				Appointment freeTime = new Appointment(appt1.getEndHour(), appt1.getEndMinute(), appt2.getStartHour(), appt2.getStartMinute());
+				scheduleList.add( i+1, freeTime);
+			}
+		}
+		
+		
+//		System.out.println(scheduleList.get(0));
+//		System.out.println(scheduleList.get(0).getStartHour() + " " + scheduleList.get(0).getStartHour());
+		
+		if(!(scheduleList.get(0).getStartHour() == 0 && scheduleList.get(0).getStartMinute() == 0))
+			scheduleList.add( 0, new Appointment(0, 0, scheduleList.get(0).getStartHour(), scheduleList.get(0).getStartMinute()));
+		size = scheduleList.size();
+		
+		if(!(scheduleList.get(size-1).getEndHour() == 23 && scheduleList.get(size-1).getEndMinute()== 59))
+			scheduleList.add(size, new Appointment(scheduleList.get(size-1).getEndHour(), scheduleList.get(size-1).getEndMinute(), 23, 59));
+		
+		return scheduleList;
 	}
 }
 

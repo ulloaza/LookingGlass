@@ -52,8 +52,8 @@
           <items>
             <MenuItem mnemonicParsing="false" onAction="#handleAddNewTask" text="Add Appointment" />
             <MenuItem mnemonicParsing="false" onAction="#deleteTask" text="Delete Appointment" />
-            <MenuItem mnemonicParsing="false" text="Find Free Time" />
-            <MenuItem mnemonicParsing="false" text="Find Multi-User Meet Time" />
+            <MenuItem mnemonicParsing="false" onAction="#handleAddNewTask" text="Find Free Time" />
+            <MenuItem mnemonicParsing="false" onAction="#handleAddNewTask" text="Find Multi-User Meet Time" />
           </items>
         </Menu>
         <Menu mnemonicParsing="false" text="Help">

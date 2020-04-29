@@ -12,8 +12,11 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -23,8 +26,11 @@ import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -46,6 +52,8 @@ public class AppointCont {
     public Button closeButton, createButton;
 	@FXML
     private TextField appTitle;
+	@FXML
+	private ListView userSchedule;
 	@FXML
 	private ComboBox appStartTime, appEndTime, inviteBox;
 	@FXML 
@@ -75,6 +83,42 @@ public class AppointCont {
         stage.close();
         
     }
+    
+    /*
+     * @purpose event handler for generate user schedule 
+     */
+    public void handleOnSelecedtInvitedMember(ActionEvent event) throws IOException {
+    	userSchedule.getItems().clear();
+    	String username = inviteBox.getSelectionModel().getSelectedItem().toString();
+    	
+    	ArrayList<Appointment> publicSchedule = cal.getUserPublicSchedule(username, appDate.getValue());
+    	
+    	if(publicSchedule != null)	userSchedule.getItems().addAll(publicSchedule);
+    	else {
+    		userSchedule.getItems().add("Available all day");
+    		return;
+    	}
+    	
+	    ContextMenu selectMenu = new ContextMenu();
+	    MenuItem selectTime = new MenuItem("select");
+	    
+	    selectTime.setOnAction(e -> {
+	    	handleOnSelectedTimeSlot();
+        });
+	    
+	    selectMenu.getItems().add(selectTime);
+	    userSchedule.setContextMenu(selectMenu);
+    }
+    
+    public void handleOnSelectedTimeSlot(){
+    	String content = (String) userSchedule.getSelectionModel().getSelectedItem().toString();
+    	
+    	String [] stringArr = (content).split(" -- ");
+    	String dateInfo = stringArr[0];
+    	stringArr = dateInfo.split("-");
+    	appStartTime.setValue(stringArr[0]);
+    	appEndTime.setValue(stringArr[1]);
+    }
     /*
      * @purpose button handler for create button; creates an appointment or todo 
      */
@@ -82,13 +126,14 @@ public class AppointCont {
     	
     	String title = appTitle.getText();
     	String desc = appDesc.getText();
+    	String invitedMember = (String) inviteBox.getValue();
     	
     	LocalDate localDate = appDate.getValue();
     	String date = localDate.getMonthValue()+"/"+localDate.getDayOfMonth()+"/"+localDate.getYear();
 
     	String start = (String) appStartTime.getValue();
     	String end = (String) appEndTime.getValue();
-    	System.out.println(date + " " + start + " " + end);
+//    	System.out.println(date + " " + start + " " + end);
         	
     	if(toggleGroup.getSelectedToggle() == appt) {
     		
@@ -108,7 +153,17 @@ public class AppointCont {
         		int year = Integer.parseInt(dateArr[2]);
         		
         		if(this.action.equals("Create"))
-        			cal.createAppointment(title, desc, startHour, startMin, endHour, endMin, day, month, year, privacy.isSelected());	
+        			if(invitedMember == null)
+        				cal.createAppointment(title, desc, startHour, startMin, endHour, endMin, day, month, year, privacy.isSelected());	
+        			else
+        			{
+//        				System.out.println("AppointmentWith " + invitedMember);
+        				boolean result = cal.createAppointmentWithInvite(title, desc, invitedMember, startHour, startMin, endHour, endMin, day, month, year, privacy.isSelected());
+        				if(result==false) {
+        					message.setText("Time Conflict");
+        					return;
+        				}
+        			}
         		else if(this.action.equals("Edit")) 
         			cal.editAppointment(currentSelectedIndex, title, desc, startHour, startMin, endHour, endMin, day, month, year, privacy.isSelected());
         		
@@ -131,7 +186,7 @@ public class AppointCont {
         		if(this.action.equals("Create"))
         			cal.createNote(title + ":\n" + desc, day, month, year);	
         		else if(this.action.equals("Edit")) {
-        			System.out.println("Note edit");
+//        			System.out.println("Note edit");
         			cal.editNote(this.currentSelectedIndex, title + ":\n" + desc, day, month, year);
         		}
     		}
@@ -190,11 +245,12 @@ public class AppointCont {
     	appTitle.setText(old_appt.getTask());
     	appDesc.setText(old_appt.getDesc());
     	appDate.setValue(old_appt.getLocalDate());
-    	
+
     	if(type.equals("Appt")) {
     		switchToAppointment();
     		todo.setDisable(true);
         	
+        	inviteBox.setValue(old_appt.getInvitedMember());
         	appStartTime.setValue(convertTo12(old_appt.getStartHour() + ":" + old_appt.getStartMinute()));
         	appEndTime.setValue(convertTo12(old_appt.getEndHour() + ":" + old_appt.getEndMinute()));
     	}
@@ -208,9 +264,13 @@ public class AppointCont {
     }
     
     public void initView() {
-    	String timeOptions [] = {"12:00 AM", "12:30 AM","1:00 AM", "1:30 AM", "2:00 AM", "2:30 AM", "3:00 AM", "3:30 AM", "4:00 AM", "4:30 AM", "5:00 AM", "5:30 AM", "6:00 AM", "6:30 AM", "7:00 AM", "7:30 AM", "8:00 AM", "8:30 AM", "9:00 AM", "9:30 AM", "10:00 AM", "10:30 AM", "11:00 AM", "11:30 AM", "12:00 PM", "12:30 PM", "1:00 PM", "1:30 PM", "2:00 PM", "2:30 PM", "3:00 PM", "3:30 PM", "4:00 PM", "4:30 PM", "5:00 PM", "5:30 PM", "6:00 PM", "6:30 PM", "7:00 PM", "7:30 PM", "8:00 PM", "8:30 PM", "9:00 PM", "9:30 PM", "10:00 PM", "10:30 PM", "11:00 PM", "11:30 PM", "12:00 PM", "12:30 PM"};
+    	String timeOptions [] = {"12:00 AM", "12:30 AM","1:00 AM", "1:30 AM", "2:00 AM", "2:30 AM", "3:00 AM", "3:30 AM", "4:00 AM", "4:30 AM", "5:00 AM", "5:30 AM", "6:00 AM", "6:30 AM", "7:00 AM", "7:30 AM", "8:00 AM", "8:30 AM", "9:00 AM", "9:30 AM", "10:00 AM", "10:30 AM", "11:00 AM", "11:30 AM", "12:00 PM", "12:30 PM", "1:00 PM", "1:30 PM", "2:00 PM", "2:30 PM", "3:00 PM", "3:30 PM", "4:00 PM", "4:30 PM", "5:00 PM", "5:30 PM", "6:00 PM", "6:30 PM", "7:00 PM", "7:30 PM", "8:00 PM", "8:30 PM", "9:00 PM", "9:30 PM", "10:00 PM", "10:30 PM", "11:00 PM", "11:30 PM", "11:59 PM"};
+    	
+    	appDate.setValue(LocalDate.now());
     	appStartTime.setItems(FXCollections.observableArrayList(timeOptions));
     	appEndTime.setItems(FXCollections.observableArrayList(timeOptions));
+    	
+    	inviteBox.setItems(FXCollections.observableArrayList(cal.getUserList()));
     }
     
     

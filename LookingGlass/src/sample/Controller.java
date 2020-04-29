@@ -381,8 +381,9 @@ public class Controller implements Initializable{
 		
 		listview2.getItems().addAll(appts);
 		task2.getItems().addAll(notes);
+		
 
-		appts = cal.getAppointmentsSpecifiedDate(date3.get(date3.DATE), date1.get(date3.MONTH) + 1, date3.get(date3.YEAR));
+		appts = cal.getAppointmentsSpecifiedDate(date3.get(date3.DATE), date3.get(date3.MONTH) + 1, date3.get(date3.YEAR));
 		notes = cal.getNotesSpecifiedDate(date3.get(date3.DATE), date3.get(date3.MONTH) + 1, date3.get(date3.YEAR));
 		
 		listview3.getItems().addAll(appts);

@@ -123,7 +123,7 @@ public class MonthCont {
 	    	LocalDate date = datePicker.getValue();
 	    	int index = appointmentList.getSelectionModel().getSelectedIndex();
 	    	cal.deleteAppointment(index, date.getDayOfMonth(), date.getMonthValue(), date.getYear());
-            System.out.println("Delete Appts " + appointmentList.getSelectionModel().getSelectedItem() + "index "+ index); 
+//            System.out.println("Delete Appts " + appointmentList.getSelectionModel().getSelectedItem() + "index "+ index); 
             
             // save new change then refresh
             Persistence.save(cal);
