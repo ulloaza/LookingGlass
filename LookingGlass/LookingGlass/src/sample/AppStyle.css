@@ -1,0 +1,66 @@
+@font-face {
+    src: url("Images/DejaVu.ttf");
+}
+
+#closeButton.button {
+    opacity: 0.6;
+    -fx-background-color: TRANSPARENT;
+    -fx-background-image: url("Images/close.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: 32px 32px;
+    -fx-background-position: center;
+    -fx-background-radius: 5;
+}
+#addTaskBtn.button {
+    -fx-background-color: TRANSPARENT;
+    -fx-background-image: url("Images/menu.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: 60px 45px;
+    -fx-background-position: center;
+    -fx-background-radius: 5;
+}
+#monthViewBtn.button {
+    -fx-background-color: TRANSPARENT;
+    -fx-background-image: url("Images/calendar.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: 60px 45px;
+    -fx-background-position: center;
+    -fx-background-radius: 5;
+}
+#arrowLeft.button {
+    -fx-background-color: TRANSPARENT;
+    -fx-background-image: url("Images/arrowleft.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: 60px 120px;
+    -fx-background-position: center;
+    -fx-background-radius: 5;
+}
+#arrowRight.button {
+    -fx-background-color: TRANSPARENT;
+    -fx-background-image: url("Images/arrowright.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: 60px 120px;
+    -fx-background-position: center;
+    -fx-background-radius: 5;
+}
+
+.label {
+    -fx-font-family: 'DejaVu Sans Mono Bold';
+}
+
+.label label1, .label label1, .label label1 {
+    -fx-font-size: medium;
+}
+
+.list-cell:empty {
+    -fx-opacity: 0;
+}
+
+.button:hover {
+    -fx-effect: dropshadow(three-pass-box, darkred, 10, 0, 0, 0);
+}
+
+.menu-bar {
+    -fx-background-color: TRANSPARENT;
+    -fx-font-family: 'DejaVu Sans Mono';
+}
